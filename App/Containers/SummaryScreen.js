@@ -1,23 +1,46 @@
 import React, { Component } from 'react'
-import { ScrollView, Text, Image, View } from 'react-native'
-import { Images } from '../Themes'
+import { View, Text } from 'react-native'
+import { connect } from 'react-redux'
 import RoundedButton from '../Components/RoundedButton'
+// Add Actions - replace 'Your' with whatever your reducer is called :)
+// import YourActions from '../Redux/YourRedux'
 
 // Styles
-import styles from './Styles/LaunchScreenStyles'
+import styles from './Styles/SummaryScreenStyle'
 
-const buttons = ['KCAL', 'PROTEIN', 'FLUID', 'IBW', 'BMI']
+const buttons = [ 'Kcal', 'Protein', 'Fluid', 'Ibw', 'Bmi']
 
-export default class SummaryScreen extends Component {
+class SummaryScreen extends Component {
+   constructor (props) {
+     super(props)
+     this.state = {}
+   }
+
   render () {
     return (
-      <View style={styles.mainContainer}>
-        <ScrollView style={styles.container}>
-          <View style={styles.section} >
-            {buttons.map(name => <RoundedButton>{name}</RoundedButton>)}
+      <View>
+        {buttons.map((name, i) => [
+          <View key={i}>
+          <RoundedButton
+            key={i}
+            onPress={() => this.props.navigation.navigate(name.concat('Screen'))}>
+            {name}
+          </RoundedButton>
           </View>
-        </ScrollView>
+        ])}
       </View>
     )
   }
 }
+
+const mapStateToProps = (state) => {
+  return {
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SummaryScreen)
