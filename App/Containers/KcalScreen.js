@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { View, Text, Picker } from 'react-native'
 import { connect } from 'react-redux'
+import RoundedButton from '../Components/RoundedButton'
 // Add Actions - replace 'Your' with whatever your reducer is called :)
 // import YourActions from '../Redux/YourRedux'
 
@@ -25,6 +26,10 @@ class KcalScreen extends Component {
           <Picker.Item label="Harris-Benedict" value="hb" />
           <Picker.Item label="Kcal/Kg" value="kcalkg" />
         </Picker>
+        <RoundedButton
+          onPress={() => alert("Calculated")}>
+          Calculate
+        </RoundedButton>
       </View>
     )
   }
