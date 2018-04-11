@@ -22,19 +22,52 @@ class SummaryScreen extends Component {
   render () {
     return (
       <View>
-        <View>
+        <View style={styles.TopMessage}>
+          <Text style={styles.BareTextBold}>Enter the following data:</Text>
+        </View>
+        <Text style={styles.LabelBar}>                   Age                                                     Weight</Text>
+        <View style={styles.container}>
           <TextInput
             // Adding hint in Text Input using Place holder.
-            placeholder="0"
+            placeholder='years'
             // Making the Under line Transparent.
             underlineColorAndroid='transparent'
-            // Calling the custom TextInputStyleClass.
-            style={styles.TextInputStyleClass}
+            // Calling the custom TextInput.
+            style={styles.TextInput}
             onChangeText={(text) => this.setState({text})}
-            value={this.state.text}>
-            </TextInput>
-            <Text style={{height: 40, width: 40}}>ft</Text>
+            value={this.state.text} />
+          <TextInput
+            // Adding hint in Text Input using Place holder.
+            placeholder='lbs'
+            // Making the Under line Transparent.
+            underlineColorAndroid='transparent'
+            // Calling the custom TextInput.
+            style={styles.TextInput}
+            onChangeText={(text) => this.setState({text})}
+            value={this.state.text} />
         </View>
+        <Text style={styles.LabelBar}>                   Height</Text>
+        <View style={styles.container}>
+          <TextInput
+            // Adding hint in Text Input using Place holder.
+            placeholder='ft'
+            // Making the Under line Transparent.
+            underlineColorAndroid='transparent'
+            // Calling the custom TextInput.
+            style={styles.TextInput}
+            onChangeText={(text) => this.setState({text})}
+            value={this.state.text} />
+          <TextInput
+            // Adding hint in Text Input using Place holder.
+            placeholder='in'
+            // Making the Under line Transparent.
+            underlineColorAndroid='transparent'
+            // Calling the custom TextInput.
+            style={styles.TextInput}
+            onChangeText={(text) => this.setState({text})}
+            value={this.state.text} />
+        </View>
+        <Text style={styles.LabelBar}>                   Gender</Text>
         {buttons.map((name, i) => [
           <View key={i}>
           <RoundedButton
