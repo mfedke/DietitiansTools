@@ -25,7 +25,7 @@ export default StyleSheet.create({
   },
   BareTextBold: {
     color: 'black',
-    fontWeight: 'bold',
+    fontWeight: 'bold'
   },
   TextInput: {
     // Setting up Hint Align center.
