@@ -17,7 +17,8 @@ class SummaryScreen extends Component {
       age: '0',
       weight: '0',
       height_ft: '0',
-      height_in: '0' }
+      height_in: '0',
+      bmr: '0' }
   }
 
 //        <View style={styles.MainContainer}>
@@ -27,18 +28,16 @@ class SummaryScreen extends Component {
     this.setState({
       gender: 'female'
     }, function () {
-      window.alert('Gender: ' + this.state.gender + '\nAge: ' + this.state.age + '\nWeight: ' + this.state.weight + '\nHeight Ft: ' + this.state.height_ft + '\nHeight In: ' + this.state.height_in)
+      window.alert('Gender: ' + this.state.gender + '\nAge: ' + this.state.age + '\nWeight: ' + this.state.weight + '\nHeight Ft: ' + this.state.height_ft + '\nHeight In: ' + this.state.height_in + '\nBMR: ' + this.state.bmr)
     })
-//    alert('Gender: ' + this.state.gender)
   }
 
   onPressMale = () => {
     this.setState({
       gender: 'male'
     }, function () {
-      window.alert('Gender: ' + this.state.gender + '\nAge: ' + this.state.age + '\nWeight: ' + this.state.weight + '\nHeight Ft: ' + this.state.height_ft + '\nHeight In: ' + this.state.height_in)
+      window.alert('Gender: ' + this.state.gender + '\nAge: ' + this.state.age + '\nWeight: ' + this.state.weight + '\nHeight Ft: ' + this.state.height_ft + '\nHeight In: ' + this.state.height_in + '\nBMR: ' + this.state.bmr)
     })
-//    alert('Gender: ' + this.state.gender)
   }
 
   render () {
@@ -115,7 +114,7 @@ class SummaryScreen extends Component {
             <View key={i}>
               <RoundedButton
                 key={i}
-                onPress={() => this.props.navigation.navigate(name.concat('Screen'))}>
+                onPress={() => this.props.navigation.navigate(name.concat('Screen'), this.state)}>
                 {name}
               </RoundedButton>
             </View>

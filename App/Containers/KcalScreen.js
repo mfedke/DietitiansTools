@@ -16,6 +16,9 @@ class KcalScreen extends Component {
     }
   }
 
+// Example of passing state back and forth through react navigation (not sure if it's ok to set this state directly or not, but couldn't get getParam/setParam to work - undefined)
+//          onPress={() => { window.alert('Gender: ' + this.props.navigation.state.params.gender + '\nAge: ' + this.props.navigation.state.params.age + '\nWeight: ' + this.props.navigation.state.params.weight + '\nHeight Ft: ' + this.props.navigation.state.params.height_ft + '\nHeight In: ' + this.props.navigation.state.params.height_in); this.props.navigation.state.params.age = 100 }}>
+
   render () {
     return (
       <View>
@@ -27,7 +30,7 @@ class KcalScreen extends Component {
           <Picker.Item label='Kcal/Kg' value='kcalkg' />
         </Picker>
         <RoundedButton
-          onPress={() => alert('Calculated')}>
+          onPress={() => { var bmr = 10.0 * this.props.navigation.state.params.weight + 6.25 * this.props.navigation.state.params.height_ft - 5.0 * this.props.navigation.state.params.age + 5; window.alert('BMR: ' + bmr); this.props.navigation.state.params.bmr = bmr }}>
           Calculate
         </RoundedButton>
       </View>
