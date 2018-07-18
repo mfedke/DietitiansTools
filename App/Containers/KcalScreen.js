@@ -9,12 +9,12 @@ import RoundedButton from '../Components/RoundedButton'
 import styles from './Styles/KcalScreenStyle'
 
 class KcalScreen extends Component {
-   constructor (props) {
-     super(props)
-     this.state = {
-       formula: 'mifflin'
-     };
-   }
+  constructor (props) {
+    super(props)
+    this.state = {
+      formula: 'mifflin'
+    }
+  }
 
   render () {
     return (
@@ -22,12 +22,12 @@ class KcalScreen extends Component {
         <Picker
           selectedValue={this.state.formula}
           onValueChange={(itemValue, itemIndex) => this.setState({formula: itemValue})}>
-          <Picker.Item label="Mifflin St. Jeor" value="mifflin" />
-          <Picker.Item label="Harris-Benedict" value="hb" />
-          <Picker.Item label="Kcal/Kg" value="kcalkg" />
+          <Picker.Item label='Mifflin St. Jeor' value='mifflin' />
+          <Picker.Item label='Harris-Benedict' value='hb' />
+          <Picker.Item label='Kcal/Kg' value='kcalkg' />
         </Picker>
         <RoundedButton
-          onPress={() => alert("Calculated")}>
+          onPress={() => alert('Calculated')}>
           Calculate
         </RoundedButton>
       </View>

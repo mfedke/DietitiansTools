@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, TextInput, Image, ScrollView } from 'react-native'
+import { View, Text, TextInput, Image, ScrollView, TouchableOpacity } from 'react-native'
 import { connect } from 'react-redux'
 import RoundedButton from '../Components/RoundedButton'
 // Add Actions - replace 'Your' with whatever your reducer is called :)
@@ -13,11 +13,33 @@ const buttons = ['Kcal', 'Protein', 'Fluid', 'Ibw', 'Bmi']
 class SummaryScreen extends Component {
   constructor (props) {
     super(props)
-    this.state = {}
+    this.state = { gender: 'female',
+      age: '0',
+      weight: '0',
+      height_ft: '0',
+      height_in: '0' }
   }
 
 //        <View style={styles.MainContainer}>
 //        <View style={{flex: 1, flexDirection: 'row'}}>
+
+  onPressFemale = () => {
+    this.setState({
+      gender: 'female'
+    }, function () {
+      window.alert('Gender: ' + this.state.gender + '\nAge: ' + this.state.age + '\nWeight: ' + this.state.weight + '\nHeight Ft: ' + this.state.height_ft + '\nHeight In: ' + this.state.height_in)
+    })
+//    alert('Gender: ' + this.state.gender)
+  }
+
+  onPressMale = () => {
+    this.setState({
+      gender: 'male'
+    }, function () {
+      window.alert('Gender: ' + this.state.gender + '\nAge: ' + this.state.age + '\nWeight: ' + this.state.weight + '\nHeight Ft: ' + this.state.height_ft + '\nHeight In: ' + this.state.height_in)
+    })
+//    alert('Gender: ' + this.state.gender)
+  }
 
   render () {
     return (
@@ -35,7 +57,7 @@ class SummaryScreen extends Component {
               underlineColorAndroid='transparent'
               // Calling the custom TextInput.
               style={styles.TextInput}
-              onChangeText={(text) => this.setState({text})}
+              onChangeText={(text) => this.setState({age: text})}
               value={this.state.text} />
             <TextInput
               // Adding hint in Text Input using Place holder.
@@ -44,7 +66,7 @@ class SummaryScreen extends Component {
               underlineColorAndroid='transparent'
               // Calling the custom TextInput.
               style={styles.TextInput}
-              onChangeText={(text) => this.setState({text})}
+              onChangeText={(text) => this.setState({weight: text})}
               value={this.state.text} />
           </View>
           <Text style={styles.LabelBar}>                   Height</Text>
@@ -56,7 +78,7 @@ class SummaryScreen extends Component {
               underlineColorAndroid='transparent'
               // Calling the custom TextInput.
               style={styles.TextInput}
-              onChangeText={(text) => this.setState({text})}
+              onChangeText={(text) => this.setState({height_ft: text})}
               value={this.state.text} />
             <TextInput
               // Adding hint in Text Input using Place holder.
@@ -65,21 +87,29 @@ class SummaryScreen extends Component {
               underlineColorAndroid='transparent'
               // Calling the custom TextInput.
               style={styles.TextInput}
-              onChangeText={(text) => this.setState({text})}
+              onChangeText={(text) => this.setState({height_in: text})}
               value={this.state.text} />
           </View>
           <Text style={styles.LabelBar}>                   Gender</Text>
-          <View style={{flexDirection: 'row', justifyContent: 'center', borderWidth: 2, height: 100, width: undefined}}>
-            <Image
-              source={require('../../App/Images/female.png')}
-              style={{flex: 1, height: undefined, width: undefined}}
-              resizeMode='contain'
-            />
-            <Image
-              source={require('../../App/Images/male.png')}
-              style={{flex: 1, height: undefined, width: undefined}}
-              resizeMode='contain'
-            />
+          <View style={{flex: 1, flexDirection: 'row', justifyContent: 'center', alignSelf: 'center', borderWidth: 1, height: 100, width: undefined}}>
+            <TouchableOpacity onPress={this.onPressFemale}>
+              <View style={{width: 40, height: 100}}>
+                <Image
+                  source={require('../../App/Images/female.png')}
+                  style={{width: 40, height: 100}}
+                  resizeMode='contain'
+                />
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={this.onPressMale}>
+              <View style={{width: 40, height: 100}}>
+                <Image
+                  source={require('../../App/Images/male.png')}
+                  style={{width: 40, height: 100}}
+                  resizeMode='contain'
+                />
+              </View>
+            </TouchableOpacity>
           </View>
           {buttons.map((name, i) => [
             <View key={i}>
