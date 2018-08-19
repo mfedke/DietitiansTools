@@ -13,12 +13,14 @@ const buttons = ['Kcal', 'Protein', 'Fluid', 'Ibw', 'Bmi']
 class SummaryScreen extends Component {
   constructor (props) {
     super(props)
-    this.state = { gender: 'female',
+    this.state = {
+      gender: 'female',
       age: '0',
-      weight: '0',
+      weight_lbs: '0',
       height_ft: '0',
       height_in: '0',
-      bmr: '0' }
+      bmr: '0'
+    }
   }
 
 //        <View style={styles.MainContainer}>
@@ -28,7 +30,7 @@ class SummaryScreen extends Component {
     this.setState({
       gender: 'female'
     }, function () {
-      window.alert('Gender: ' + this.state.gender + '\nAge: ' + this.state.age + '\nWeight: ' + this.state.weight + '\nHeight Ft: ' + this.state.height_ft + '\nHeight In: ' + this.state.height_in + '\nBMR: ' + this.state.bmr)
+      window.alert('Gender: ' + this.state.gender + '\nAge: ' + this.state.age + '\nWeight: ' + this.state.weight_lbs + '\nHeight Ft: ' + this.state.height_ft + '\nHeight In: ' + this.state.height_in + '\nBMR: ' + this.state.bmr)
     })
   }
 
@@ -36,7 +38,7 @@ class SummaryScreen extends Component {
     this.setState({
       gender: 'male'
     }, function () {
-      window.alert('Gender: ' + this.state.gender + '\nAge: ' + this.state.age + '\nWeight: ' + this.state.weight + '\nHeight Ft: ' + this.state.height_ft + '\nHeight In: ' + this.state.height_in + '\nBMR: ' + this.state.bmr)
+      window.alert('Gender: ' + this.state.gender + '\nAge: ' + this.state.age + '\nWeight: ' + this.state.weight_lbs + '\nHeight Ft: ' + this.state.height_ft + '\nHeight In: ' + this.state.height_in + '\nBMR: ' + this.state.bmr)
     })
   }
 
@@ -50,41 +52,29 @@ class SummaryScreen extends Component {
           <Text style={styles.LabelBar}>                   Age                                                     Weight</Text>
           <View style={styles.container}>
             <TextInput
-              // Adding hint in Text Input using Place holder.
               placeholder='years'
-              // Making the Under line Transparent.
               underlineColorAndroid='transparent'
-              // Calling the custom TextInput.
               style={styles.TextInput}
               onChangeText={(text) => this.setState({age: text})}
               value={this.state.text} />
             <TextInput
-              // Adding hint in Text Input using Place holder.
               placeholder='lbs'
-              // Making the Under line Transparent.
               underlineColorAndroid='transparent'
-              // Calling the custom TextInput.
               style={styles.TextInput}
-              onChangeText={(text) => this.setState({weight: text})}
+              onChangeText={(text) => this.setState({weight_lbs: text})}
               value={this.state.text} />
           </View>
           <Text style={styles.LabelBar}>                   Height</Text>
           <View style={styles.container}>
             <TextInput
-              // Adding hint in Text Input using Place holder.
               placeholder='ft'
-              // Making the Under line Transparent.
               underlineColorAndroid='transparent'
-              // Calling the custom TextInput.
               style={styles.TextInput}
               onChangeText={(text) => this.setState({height_ft: text})}
               value={this.state.text} />
             <TextInput
-              // Adding hint in Text Input using Place holder.
               placeholder='in'
-              // Making the Under line Transparent.
               underlineColorAndroid='transparent'
-              // Calling the custom TextInput.
               style={styles.TextInput}
               onChangeText={(text) => this.setState({height_in: text})}
               value={this.state.text} />
