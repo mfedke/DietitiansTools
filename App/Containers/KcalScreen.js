@@ -11,12 +11,6 @@ import update from 'immutability-helper'
 import styles from './Styles/KcalScreenStyle'
 
 class KcalFactors extends React.Component {
-  static propTypes = {
-    formula: PropTypes.string.isRequired,
-    updateActivity: PropTypes.func.isRequired,
-    updateStress: PropTypes.func.isRequired
-  }
-
   render () {
     const {formula, hbFactors, updateHBFactors, mifflinFactors, updateMifflinFactors, KcalKg, updateKcalKg} = this.props
     var factors = null
@@ -179,8 +173,7 @@ class KcalScreen extends Component {
             console.log('Button pressed, this.state: ', this.state, 'returning BMR: ', bmr)
 // TODO BMR result is undefined for mifflin and hb cases
             this.props.navigation.state.params.bmr = bmr
-          }
-                  }>
+          }}>
           Calculate
         </RoundedButton>
       </View>
