@@ -1,6 +1,5 @@
-import PropTypes from 'prop-types'
 import React, { Component } from 'react'
-import { View, Picker, Text, Slider } from 'react-native'
+import { View, Picker, Text } from 'react-native'
 import { connect } from 'react-redux'
 import RoundedButton from '../Components/RoundedButton'
 import update from 'immutability-helper'
@@ -37,23 +36,33 @@ class KcalFactors extends React.Component {
         <View>
           <View paddingLeft='5%' paddingRight='5%' paddingTop='5%' paddingBottom='10%'>
             <Text style={styles.LabelBar}>Activity Factor: {selectedHB.activity.toFixed(1)}</Text>
-            <Slider
-              minimumValue={1.0}
-              maximumValue={1.8}
-              step={0.1}
-              value={selectedHB.activity}
-              onValueChange={(itemValue, itemIndex) => { selectedHB.activity = itemValue; updateHBFactors(selectedHB) }}
-            />
+              <Picker
+                selectedValue={selectedHB.activity}
+                onValueChange={(itemValue, itemIndex) => { selectedHB.activity = itemValue; updateHBFactors(selectedHB) }}>
+                <Picker.Item label='1.0 - comatose, motionless' value={1.0} />
+                <Picker.Item label='1.2 - in bed, bed to chair' value={1.2} />
+                <Picker.Item label='1.3 - hospitalized ambulatory' value={1.3} />
+                <Picker.Item label='1.5 - regular exercise' value={1.5} />
+                <Picker.Item label='1.8 - strenuous activity' value={1.8} />
+              </Picker>
           </View>
           <View paddingLeft='5%' paddingRight='5%' paddingTop='5%' paddingBottom='10%'>
-            <Text style={styles.LabelBar}>Stress Factor: {selectedHB.stress.toFixed(1)}</Text>
-            <Slider
-              minimumValue={1.0}
-              maximumValue={2.0}
-              step={0.1}
-              value={selectedHB.stress}
-              onValueChange={(itemValue, itemIndex) => { selectedHB.stress = itemValue; updateHBFactors(selectedHB) }}
-            />
+            <Text style={styles.LabelBar}>Stress Factor: {selectedHB.stress}</Text>
+            <Picker
+              selectedValue={selectedHB.stress}
+              onValueChange={(itemValue, itemIndex) => { selectedHB.stress = itemValue; updateHBFactors(selectedHB) }}>
+              <Picker.Item label='1.0 - No stress' value='LL: 1.0, UL: 1.0' />
+              <Picker.Item label='1.0 - 1.2: Minor Surgery' value='LL: 1.0, UL: 1.2' />
+              <Picker.Item label='1.1 - 1.3: Major Surgery' value='LL: 1.1, UL: 1.3' />
+              <Picker.Item label='1.1 - 1.6: Skeletal Trauma' value='LL: 1.1, UL: 1.6' />
+              <Picker.Item label='1.6 - 1.8: Head Trauma' value='LL: 1.6, UL: 1.8' />
+              <Picker.Item label='1.0 - 1.2: Mild Infection' value='LL: 1.0, UL: 1.2' />
+              <Picker.Item label='1.2 - 1.4: Moderate Infection' value='LL: 1.2, UL: 1.4' />
+              <Picker.Item label='1.4 - 1.8: Severe Infection' value='LL: 1.4, UL: 1.8' />
+              <Picker.Item label='1.2 - 1.5: <20% BSA Burn' value='LL: 1.2, UL: 1.5' />
+              <Picker.Item label='1.5 - 1.8: 20% - 40% BSA Burn' value='LL: 1.5, UL: 1.8' />
+              <Picker.Item label='1.8 - 2.0: >40% BSA Burn' value='LL: 1.8, UL: 2.0' />
+            </Picker>
           </View>
         </View>
     } else if (formula === 'kcalkg') {
@@ -62,11 +71,11 @@ class KcalFactors extends React.Component {
           <Picker
             selectedValue={selectedKcalKg}
             onValueChange={(itemValue, itemIndex) => { selectedKcalKg = itemValue; updateKcalKg(selectedKcalKg) }}>
-            <Picker.Item label='18 - 22 Kcal/Kg' value={18} />
-            <Picker.Item label='20 - 25 Kcal/Kg' value={20} />
-            <Picker.Item label='25 - 30 Kcal/Kg' value={25} />
-            <Picker.Item label='30 - 35 Kcal/Kg' value={30} />
-            <Picker.Item label='35 - 40 Kcal/Kg' value={35} />
+            <Picker.Item label='18 - 22 Kcal/Kg' value='LL: 18, UL: 22' />
+            <Picker.Item label='20 - 25 Kcal/Kg' value='LL: 20, UL: 25' />
+            <Picker.Item label='25 - 30 Kcal/Kg' value='LL: 25, UL: 30' />
+            <Picker.Item label='30 - 35 Kcal/Kg' value='LL: 30, UL: 35' />
+            <Picker.Item label='35 - 40 Kcal/Kg' value='LL: 35, UL: 40' />
           </Picker>
         </View>
     }
@@ -80,10 +89,11 @@ class KcalScreen extends Component {
     super(props)
     this.state = {
       formula: 'mifflin',
-      factors: {'mifflin': {'activity': 1.2}, 'hb': {'activity': 1.0, 'stress': 1.0}},
-      KcalKg: 18
+      factors: {'mifflin': {'activity': 1.2}, 'hb': {'activity': 1.0, 'stress': 'LL: 1.0, UL: 1.0'}},
+      KcalKg: 'LL: 0.0, UL: 0.0'
     }
   }
+
 
 // Example of passing state back and forth through react navigation (not sure if it's ok to set this state directly or not, but couldn't get getParam/setParam to work - undefined)
 //          onPress={() => { window.alert('Gender: ' + this.props.navigation.state.params.gender + '\nAge: ' + this.props.navigation.state.params.age + '\nWeight: ' + this.props.navigation.state.params.weight + '\nHeight Ft: ' + this.props.navigation.state.params.height_ft + '\nHeight In: ' + this.props.navigation.state.params.height_in); this.props.navigation.state.params.age = 100 }}>
@@ -135,44 +145,58 @@ class KcalScreen extends Component {
         />
         <RoundedButton
           onPress={() => {
-            var bmr
+            var bmrBase = 0
+            var bmr = 0
+            var heightIn = this.props.navigation.state.params.height_ft * 12 + this.props.navigation.state.params.height_in
+            var LLULRegex = /LL: ([0-9\.]+), UL: ([0-9\.]+)/
 
             if (this.state.formula === 'mifflin') {
-              var heightIn = this.props.navigation.state.params.height_ft * 12 + this.props.navigation.state.params.height_in
-              if (this.props.navigation.state.gender === 'male') {
+              if (this.props.navigation.state.params.gender === 'male') {
                 // Male: BMR = 10 * weight + 6.25 * height - 5 * age + 5
-                bmr = 10.0 * this.convertLbsToKg(this.props.navigation.state.params.weight) +
-                      6.25 * this.convertInToCm(heightIn) -
-                      5.0 * this.props.navigation.state.params.age +
-                      5
-              } else if (this.props.navigation.state.gender === 'female') {
+                bmrBase = 10.0 * this.convertLbsToKg(this.props.navigation.state.params.weight_lbs) +
+                          6.25 * this.convertInToCm(heightIn) -
+                          5.0 * this.props.navigation.state.params.age +
+                          5
+              } else if (this.props.navigation.state.params.gender === 'female') {
                 // Female: BMR = 10 * weight + 6.25 * height - 5 * age - 161
-                bmr = 10.0 * this.convertLbsToKg(this.props.navigation.state.params.weight) +
-                      6.25 * this.convertInToCm(heightIn) -
-                      5.0 * this.props.navigation.state.params.age +
-                      5
+                bmrBase = 10.0 * this.convertLbsToKg(this.props.navigation.state.params.weight_lbs) +
+                          6.25 * this.convertInToCm(heightIn) -
+                          5.0 * this.props.navigation.state.params.age +
+                          5
               }
+              var bmrBoth = bmrBase * this.state.factors['mifflin']['activity']
+              bmr = {'LL': bmrBoth, 'UL': bmrBoth}
             } else if (this.state.formula === 'hb') {
-              if (this.props.navigation.state.gender === 'male') {
+              if (this.props.navigation.state.params.gender === 'male') {
                 // Male: RMR = 13.75 * weight + 5 * height - 6.75 * age + 66.47
-                bmr = 13.75 * this.convertLbsToKg(this.props.navigation.state.params.weight) +
-                      5 * this.convertInToCm(heightIn) -
-                      6.75 * this.props.navigation.state.params.age +
-                      66.47
-              } else if (this.props.navigation.state.gender === 'female') {
+                bmrBase = 13.75 * this.convertLbsToKg(this.props.navigation.state.params.weight_lbs) +
+                          5 * this.convertInToCm(heightIn) -
+                          6.75 * this.props.navigation.state.params.age +
+                          66.47
+              } else if (this.props.navigation.state.params.gender === 'female') {
                 // Female: RMR = 9.56 * weight + 1.84 * height - 4.67 * age + 655.09
-                bmr = 9.56 * this.convertLbsToKg(this.props.navigation.state.params.weight) +
-                      1.84 * this.convertInToCm(heightIn) -
-                      4.67 * this.props.navigation.state.params.age +
-                      655.09
+                bmrBase = 9.56 * this.convertLbsToKg(this.props.navigation.state.params.weight_lbs) +
+                          1.84 * this.convertInToCm(heightIn) -
+                          4.67 * this.props.navigation.state.params.age +
+                          655.09
               }
+              let stressMatch = LLULRegex.exec(this.state.factors['hb']['stress'])
+              let stressLL = parseFloat(stressMatch[1])
+              let stressUL = parseFloat(stressMatch[2])
+              bmr = {'LL': bmrBase * this.state.factors['hb']['activity'] * stressLL, 'UL': bmrBase * this.state.factors['hb']['activity'] * stressUL}
             } else if (this.state.formula === 'kcalkg') {
             // return directly
-              bmr = this.state.KcalKg
+              let kcalkgMatch = LLULRegex.exec(this.state.KcalKg)
+              let kcalkgLL = parseFloat(kcalkgMatch[1])
+              let kcalkgUL = parseFloat(kcalkgMatch[2])
+              bmr = {'LL': kcalkgLL, 'UL': kcalkgUL}
             }
-            console.log('Button pressed, this.state: ', this.state, 'returning BMR: ', bmr)
-// TODO BMR result is undefined for mifflin and hb cases
-            this.props.navigation.state.params.bmr = bmr
+            console.log('Button pressed, this.state: ' + this.state)
+            console.log('returning BMR: ' + bmr['LL'] + ' - ' + bmr['UL'])
+            this.props.navigation.state.params.bmr_min = bmr['LL']
+            this.props.navigation.state.params.bmr_max = bmr['UL']
+            // call refreshState to ensure that the main screen redraws with all these updated state params
+            this.props.navigation.state.params.refreshState(this.props.navigation.state.params)
           }}>
           Calculate
         </RoundedButton>

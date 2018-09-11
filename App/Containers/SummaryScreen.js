@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, TextInput, Image, ScrollView, TouchableOpacity } from 'react-native'
+import { View, Text, TextInput, Image, ScrollView, TouchableOpacity, Button } from 'react-native'
 import { connect } from 'react-redux'
 import RoundedButton from '../Components/RoundedButton'
 // Add Actions - replace 'Your' with whatever your reducer is called :)
@@ -10,28 +10,35 @@ import styles from './Styles/SummaryScreenStyle'
 
 const buttons = ['Kcal', 'Protein', 'Fluid', 'Ibw', 'Bmi']
 
+const noop = () => {}
+
 class SummaryScreen extends Component {
   constructor (props) {
     super(props)
+
+    const onRefreshState = (state) => {
+      this.setState(state)
+    }
+
     this.state = {
       gender: 'female',
       age: '0',
       weight_lbs: '0',
       height_ft: '0',
       height_in: '0',
-      bmr: '0',
-      protein: '0'
+      bmr_min: 0.0,
+      bmr_max: 0.0,
+      protein_min: 0.0,
+      protein_max: 0.0,
+      refreshState: onRefreshState
     }
   }
-
-//        <View style={styles.MainContainer}>
-//        <View style={{flex: 1, flexDirection: 'row'}}>
 
   onPressFemale = () => {
     this.setState({
       gender: 'female'
     }, function () {
-      window.alert('Gender: ' + this.state.gender + '\nAge: ' + this.state.age + '\nWeight: ' + this.state.weight_lbs + '\nHeight Ft: ' + this.state.height_ft + '\nHeight In: ' + this.state.height_in + '\nBMR: ' + this.state.bmr + '\nProtein: ' + this.state.protein)
+      window.alert('Gender: ' + this.state.gender + '\nAge: ' + this.state.age + '\nWeight: ' + this.state.weight_lbs + '\nHeight Ft: ' + this.state.height_ft + '\nHeight In: ' + this.state.height_in + '\nBMR: ' + this.state.bmr_min + ' - ' + this.state.bmr_max + '\nProtein: ' + this.state.protein)
     })
   }
 
@@ -39,13 +46,22 @@ class SummaryScreen extends Component {
     this.setState({
       gender: 'male'
     }, function () {
-      window.alert('Gender: ' + this.state.gender + '\nAge: ' + this.state.age + '\nWeight: ' + this.state.weight_lbs + '\nHeight Ft: ' + this.state.height_ft + '\nHeight In: ' + this.state.height_in + '\nBMR: ' + this.state.bmr + '\nProtein: ' + this.state.protein)
+      window.alert('Gender: ' + this.state.gender + '\nAge: ' + this.state.age + '\nWeight: ' + this.state.weight_lbs + '\nHeight Ft: ' + this.state.height_ft + '\nHeight In: ' + this.state.height_in + '\nBMR: ' + this.state.bmr_min + ' - ' + this.state.bmr_max + '\nProtein: ' + this.state.protein)
     })
   }
 
   render () {
+    var calculatedValStrings = {
+      'Kcal': this.state.bmr_min.toFixed(2) + ' - ' + this.state.bmr_max.toFixed(2),
+      'Protein': this.state.protein_min.toFixed(2) + ' - ' + this.state.protein_max.toFixed(2),
+      'Fluid': '-1',
+      'Ibw': '-1',
+      'Bmi': '-1'
+    }
+
     return (
       <ScrollView>
+        { /* this is an inline JSX comment */ }
         <View>
           <View style={styles.TopMessage}>
             <Text style={styles.BareTextBold}>Enter the following data:</Text>
@@ -102,12 +118,19 @@ class SummaryScreen extends Component {
             </TouchableOpacity>
           </View>
           {buttons.map((name, i) => [
-            <View key={i}>
-              <RoundedButton
-                key={i}
-                onPress={() => this.props.navigation.navigate(name.concat('Screen'), this.state)}>
-                {name}
-              </RoundedButton>
+            <View key={i} style={{flex: 1, flexDirection: 'row'}}>
+              <View key={i} style={{flexBasis: '60%'}}>
+                <RoundedButton
+                  key={i}
+                  onPress={() => this.props.navigation.navigate(name.concat('Screen'), this.state)}>
+                  {name}
+                </RoundedButton>
+              </View>
+              <View key={i} style={{flexBasis: '40%'}}>
+                <View key={i} style={{padding: '10%'}}>
+                  <Button title={calculatedValStrings[name]} disabled onPress={noop} />
+                </View>
+              </View>
             </View>
           ])}
         </View>
