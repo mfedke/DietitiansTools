@@ -36,15 +36,15 @@ class KcalFactors extends React.Component {
         <View>
           <View paddingLeft='5%' paddingRight='5%' paddingTop='5%' paddingBottom='10%'>
             <Text style={styles.LabelBar}>Activity Factor: {selectedHB.activity.toFixed(1)}</Text>
-              <Picker
-                selectedValue={selectedHB.activity}
-                onValueChange={(itemValue, itemIndex) => { selectedHB.activity = itemValue; updateHBFactors(selectedHB) }}>
-                <Picker.Item label='1.0 - comatose, motionless' value={1.0} />
-                <Picker.Item label='1.2 - in bed, bed to chair' value={1.2} />
-                <Picker.Item label='1.3 - hospitalized ambulatory' value={1.3} />
-                <Picker.Item label='1.5 - regular exercise' value={1.5} />
-                <Picker.Item label='1.8 - strenuous activity' value={1.8} />
-              </Picker>
+            <Picker
+              selectedValue={selectedHB.activity}
+              onValueChange={(itemValue, itemIndex) => { selectedHB.activity = itemValue; updateHBFactors(selectedHB) }}>
+              <Picker.Item label='1.0 - comatose, motionless' value={1.0} />
+              <Picker.Item label='1.2 - in bed, bed to chair' value={1.2} />
+              <Picker.Item label='1.3 - hospitalized ambulatory' value={1.3} />
+              <Picker.Item label='1.5 - regular exercise' value={1.5} />
+              <Picker.Item label='1.8 - strenuous activity' value={1.8} />
+            </Picker>
           </View>
           <View paddingLeft='5%' paddingRight='5%' paddingTop='5%' paddingBottom='10%'>
             <Text style={styles.LabelBar}>Stress Factor: {selectedHB.stress}</Text>
@@ -90,7 +90,7 @@ class KcalScreen extends Component {
     this.state = {
       formula: 'mifflin',
       factors: {'mifflin': {'activity': 1.2}, 'hb': {'activity': 1.0, 'stress': 'LL: 1.0, UL: 1.0'}},
-      KcalKg: 'LL: 0.0, UL: 0.0'
+      KcalKg: 'LL: 18.0, UL: 22.0'
     }
   }
 
@@ -185,11 +185,13 @@ class KcalScreen extends Component {
               let stressUL = parseFloat(stressMatch[2])
               bmr = {'LL': bmrBase * this.state.factors['hb']['activity'] * stressLL, 'UL': bmrBase * this.state.factors['hb']['activity'] * stressUL}
             } else if (this.state.formula === 'kcalkg') {
-            // return directly
               let kcalkgMatch = LLULRegex.exec(this.state.KcalKg)
               let kcalkgLL = parseFloat(kcalkgMatch[1])
               let kcalkgUL = parseFloat(kcalkgMatch[2])
-              bmr = {'LL': kcalkgLL, 'UL': kcalkgUL}
+              let weightKg = this.convertLbsToKg(this.props.navigation.state.params.weight_lbs)
+              bmr = {'LL': kcalkgLL * weightKg, 'UL': kcalkgUL * weightKg}
+              this.props.navigation.state.params.kcal_min = bmr['LL']
+              this.props.navigation.state.params.kcal_max = bmr['UL']
             }
             console.log('Button pressed, this.state: ' + this.state)
             console.log('returning BMR: ' + bmr['LL'] + ' - ' + bmr['UL'])
