@@ -28,8 +28,12 @@ class SummaryScreen extends Component {
       height_in: '0',
       bmr_min: 0.0,
       bmr_max: 0.0,
+      kcal_min: 0.0,
+      kcal_max: 0.0,
       protein_min: 0.0,
       protein_max: 0.0,
+      fluid_min: 0.0,
+      fluid_max: 0.0,
       refreshState: onRefreshState
     }
   }
@@ -54,7 +58,7 @@ class SummaryScreen extends Component {
     var calculatedValStrings = {
       'Kcal': this.state.bmr_min.toFixed(2) + ' - ' + this.state.bmr_max.toFixed(2),
       'Protein': this.state.protein_min.toFixed(2) + ' - ' + this.state.protein_max.toFixed(2),
-      'Fluid': '-1',
+      'Fluid': this.state.fluid_min.toFixed(2) + ' - ' + this.state.fluid_max.toFixed(2),
       'Ibw': '-1',
       'Bmi': '-1'
     }
