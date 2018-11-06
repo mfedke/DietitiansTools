@@ -36,6 +36,7 @@ class SummaryScreen extends Component {
       fluid_max: 0.0,
       ibw_min: 0.0,
       ibw_max: 0.0,
+      bmi: 0.0,
       refreshState: onRefreshState
     }
   }
@@ -62,7 +63,7 @@ class SummaryScreen extends Component {
       'Protein': this.state.protein_min.toFixed(2) + ' - ' + this.state.protein_max.toFixed(2),
       'Fluid': this.state.fluid_min.toFixed(2) + ' - ' + this.state.fluid_max.toFixed(2),
       'Ibw': this.state.ibw_min.toFixed(2) + ' - ' + this.state.ibw_max.toFixed(2),
-      'Bmi': '-1'
+      'Bmi': this.state.bmi.toFixed(2)
     }
 
     return (
