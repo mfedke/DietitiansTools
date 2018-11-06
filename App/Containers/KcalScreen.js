@@ -147,21 +147,21 @@ class KcalScreen extends Component {
           onPress={() => {
             var bmrBase = 0
             var bmr = 0
-            var heightIn = this.props.navigation.state.params.height_ft * 12 + this.props.navigation.state.params.height_in
+            var heightIn = parseFloat(this.props.navigation.state.params.height_ft) * 12.0 + parseFloat(this.props.navigation.state.params.height_in)
             var LLULRegex = /LL: ([0-9\.]+), UL: ([0-9\.]+)/
 
             if (this.state.formula === 'mifflin') {
               if (this.props.navigation.state.params.gender === 'male') {
                 // Male: BMR = 10 * weight + 6.25 * height - 5 * age + 5
-                bmrBase = 10.0 * this.convertLbsToKg(this.props.navigation.state.params.weight_lbs) +
+                bmrBase = 10.0 * this.convertLbsToKg(parseFloat(this.props.navigation.state.params.weight_lbs)) +
                           6.25 * this.convertInToCm(heightIn) -
-                          5.0 * this.props.navigation.state.params.age +
+                          5.0 * parseFloat(this.props.navigation.state.params.age) +
                           5
               } else if (this.props.navigation.state.params.gender === 'female') {
                 // Female: BMR = 10 * weight + 6.25 * height - 5 * age - 161
-                bmrBase = 10.0 * this.convertLbsToKg(this.props.navigation.state.params.weight_lbs) +
+                bmrBase = 10.0 * this.convertLbsToKg(parseFloat(this.props.navigation.state.params.weight_lbs)) +
                           6.25 * this.convertInToCm(heightIn) -
-                          5.0 * this.props.navigation.state.params.age +
+                          5.0 * parseFloat(this.props.navigation.state.params.age) +
                           5
               }
               var bmrBoth = bmrBase * this.state.factors['mifflin']['activity']
@@ -169,15 +169,15 @@ class KcalScreen extends Component {
             } else if (this.state.formula === 'hb') {
               if (this.props.navigation.state.params.gender === 'male') {
                 // Male: RMR = 13.75 * weight + 5 * height - 6.75 * age + 66.47
-                bmrBase = 13.75 * this.convertLbsToKg(this.props.navigation.state.params.weight_lbs) +
+                bmrBase = 13.75 * this.convertLbsToKg(parseFloat(this.props.navigation.state.params.weight_lbs)) +
                           5 * this.convertInToCm(heightIn) -
-                          6.75 * this.props.navigation.state.params.age +
+                          6.75 * parseFloat(this.props.navigation.state.params.age) +
                           66.47
               } else if (this.props.navigation.state.params.gender === 'female') {
                 // Female: RMR = 9.56 * weight + 1.84 * height - 4.67 * age + 655.09
-                bmrBase = 9.56 * this.convertLbsToKg(this.props.navigation.state.params.weight_lbs) +
+                bmrBase = 9.56 * this.convertLbsToKg(parseFloat(this.props.navigation.state.params.weight_lbs)) +
                           1.84 * this.convertInToCm(heightIn) -
-                          4.67 * this.props.navigation.state.params.age +
+                          4.67 * parseFloat(this.props.navigation.state.params.age) +
                           655.09
               }
               let stressMatch = LLULRegex.exec(this.state.factors['hb']['stress'])
@@ -188,7 +188,7 @@ class KcalScreen extends Component {
               let kcalkgMatch = LLULRegex.exec(this.state.KcalKg)
               let kcalkgLL = parseFloat(kcalkgMatch[1])
               let kcalkgUL = parseFloat(kcalkgMatch[2])
-              let weightKg = this.convertLbsToKg(this.props.navigation.state.params.weight_lbs)
+              let weightKg = this.convertLbsToKg(parseFloat(this.props.navigation.state.params.weight_lbs))
               bmr = {'LL': kcalkgLL * weightKg, 'UL': kcalkgUL * weightKg}
               this.props.navigation.state.params.kcal_min = bmr['LL']
               this.props.navigation.state.params.kcal_max = bmr['UL']

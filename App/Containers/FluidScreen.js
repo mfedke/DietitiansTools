@@ -79,20 +79,20 @@ class FluidScreen extends Component {
                 let mlkgMatch = LLULRegex.exec(this.state.mlkgFactors)
                 let mlkgLL = parseFloat(mlkgMatch[1])
                 let mlkgUL = parseFloat(mlkgMatch[2])
-                let weightKg = this.convertLbsToKg(this.props.navigation.state.params.weight_lbs)
+                let weightKg = this.convertLbsToKg(parseFloat(this.props.navigation.state.params.weight_lbs))
                 console.log('calculating mlkg with LL: ' + mlkgLL + ' UL: ' + mlkgUL + ' weightKg: ' + weightKg)
                 fluid = {'LL': mlkgLL * weightKg, 'UL': mlkgUL * weightKg}
               } else if (this.state.formula === 'mlkcal') {
                 fluid = {'LL': this.props.navigation.state.params.kcal_min, 'UL': this.props.navigation.state.params.kcal_max}
               } else if (this.state.formula === 'hs') {
-                let weightKg = this.convertLbsToKg(this.props.navigation.state.params.weight_lbs)
+                let weightKg = this.convertLbsToKg(parseFloat(this.props.navigation.state.params.weight_lbs))
                 let fluidBase = 0.0
                 if (weightKg <= 10) {
                   fluidBase = 100.0 * weightKg
                 } else if (weightKg <= 20.0) {
                   fluidBase = 1000.0 + (weightKg - 10.0) * 50.0
                 } else {
-                  if (this.props.navigation.state.params.age <= 50) {
+                  if (parseFloat(this.props.navigation.state.params.age) <= 50) {
                     fluidBase = 1500.0 + (weightKg - 20.0) * 20.0
                   } else {
                     fluidBase = 1500.0 + (weightKg - 20.0) * 15.0
