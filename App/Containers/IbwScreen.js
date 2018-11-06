@@ -43,7 +43,7 @@ class IbwScreen extends Component {
               this.setState({ampVal: itemValue})
             }}
           >
-            <Picker.Item label='No Amputation' value='1' />
+            <Picker.Item label='No Amputation' value={1.0} />
             <Picker.Item label='Below Knee - 5.9%' value={1.0 - 0.059} />
             <Picker.Item label='Above Knee - 10.0%' value={1.0 - 0.1} />
             <Picker.Item label='Bilateral BKA - 11.8%' value={1.0 - 0.118} />
