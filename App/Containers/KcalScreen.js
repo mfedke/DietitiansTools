@@ -51,17 +51,17 @@ class KcalFactors extends React.Component {
             <Picker
               selectedValue={selectedHB.stress}
               onValueChange={(itemValue, itemIndex) => { selectedHB.stress = itemValue; updateHBFactors(selectedHB) }}>
-              <Picker.Item label='1.0 - No stress' value='LL: 1.0, UL: 1.0' />
-              <Picker.Item label='1.0 - 1.2: Minor Surgery' value='LL: 1.0, UL: 1.2' />
-              <Picker.Item label='1.1 - 1.3: Major Surgery' value='LL: 1.1, UL: 1.3' />
-              <Picker.Item label='1.1 - 1.6: Skeletal Trauma' value='LL: 1.1, UL: 1.6' />
-              <Picker.Item label='1.6 - 1.8: Head Trauma' value='LL: 1.6, UL: 1.8' />
-              <Picker.Item label='1.0 - 1.2: Mild Infection' value='LL: 1.0, UL: 1.2' />
-              <Picker.Item label='1.2 - 1.4: Moderate Infection' value='LL: 1.2, UL: 1.4' />
-              <Picker.Item label='1.4 - 1.8: Severe Infection' value='LL: 1.4, UL: 1.8' />
-              <Picker.Item label='1.2 - 1.5: <20% BSA Burn' value='LL: 1.2, UL: 1.5' />
-              <Picker.Item label='1.5 - 1.8: 20% - 40% BSA Burn' value='LL: 1.5, UL: 1.8' />
-              <Picker.Item label='1.8 - 2.0: >40% BSA Burn' value='LL: 1.8, UL: 2.0' />
+              <Picker.Item label='1.0 - No stress' value='No stress - LL: 1.0, UL: 1.0' />
+              <Picker.Item label='1.0 - 1.2: Minor Surgery' value='Minor Surgery - LL: 1.0, UL: 1.2' />
+              <Picker.Item label='1.1 - 1.3: Major Surgery' value='Major Surgery - LL: 1.1, UL: 1.3' />
+              <Picker.Item label='1.1 - 1.6: Skeletal Trauma' value='Skeletal Trauma - LL: 1.1, UL: 1.6' />
+              <Picker.Item label='1.6 - 1.8: Head Trauma' value='Head Trauma - LL: 1.6, UL: 1.8' />
+              <Picker.Item label='1.0 - 1.2: Mild Infection' value='Mild Infection - LL: 1.0, UL: 1.2' />
+              <Picker.Item label='1.2 - 1.4: Moderate Infection' value='Moderate Infection - LL: 1.2, UL: 1.4' />
+              <Picker.Item label='1.4 - 1.8: Severe Infection' value='Severe Infection - LL: 1.4, UL: 1.8' />
+              <Picker.Item label='1.2 - 1.5: <20% BSA Burn' value='<20% BSA Burn - LL: 1.2, UL: 1.5' />
+              <Picker.Item label='1.5 - 1.8: 20% - 40% BSA Burn' value='20% - 40% BSA Burn - LL: 1.5, UL: 1.8' />
+              <Picker.Item label='1.8 - 2.0: >40% BSA Burn' value='>40% BSA Burn - LL: 1.8, UL: 2.0' />
             </Picker>
           </View>
         </View>
@@ -89,7 +89,7 @@ class KcalScreen extends Component {
     super(props)
     this.state = {
       formula: 'mifflin',
-      factors: {'mifflin': {'activity': 1.2}, 'hb': {'activity': 1.0, 'stress': 'LL: 1.0, UL: 1.0'}},
+      factors: {'mifflin': {'activity': 1.2}, 'hb': {'activity': 1.0, 'stress': 'No stress - LL: 1.0, UL: 1.0'}},
       KcalKg: 'LL: 18.0, UL: 22.0'
     }
   }
