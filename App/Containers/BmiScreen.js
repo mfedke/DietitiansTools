@@ -57,7 +57,7 @@ class BmiScreen extends Component {
             Calculate
           </RoundedButton>
           <View style={{flex: 1, flexDirection: 'row', justifyContent: 'center', alignSelf: 'center', alignItems: 'center', borderWidth: 1, height: 30, width: '80%'}}>
-            <Text>BMI: {this.state.bmi.toFixed(2)}</Text>
+            <Text>BMI: {this.state.bmi.toFixed(1)}</Text>
           </View>
           <View style={{flex: 1, flexDirection: 'row', justifyContent: 'center', alignSelf: 'center', height: 30, width: '80%'}}/>
           <View style={{flex: 1, flexDirection: 'row', justifyContent: 'center', alignSelf: 'center', borderWidth: 1, height: 30, width: '80%'}}>

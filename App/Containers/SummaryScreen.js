@@ -59,11 +59,11 @@ class SummaryScreen extends Component {
 
   render () {
     var calculatedValStrings = {
-      'Kcal': this.state.bmr_min.toFixed(2) + ' - ' + this.state.bmr_max.toFixed(2),
-      'Protein': this.state.protein_min.toFixed(2) + ' - ' + this.state.protein_max.toFixed(2),
-      'Fluid': this.state.fluid_min.toFixed(2) + ' - ' + this.state.fluid_max.toFixed(2),
-      'Ibw': this.state.ibw_min.toFixed(2) + ' - ' + this.state.ibw_max.toFixed(2),
-      'Bmi': this.state.bmi.toFixed(2)
+      'Kcal': this.state.bmr_min.toFixed(1) + ' - ' + this.state.bmr_max.toFixed(1),
+      'Protein': this.state.protein_min.toFixed(1) + ' - ' + this.state.protein_max.toFixed(1),
+      'Fluid': this.state.fluid_min.toFixed(1) + ' - ' + this.state.fluid_max.toFixed(1),
+      'Ibw': this.state.ibw_min.toFixed(1) + ' - ' + this.state.ibw_max.toFixed(1),
+      'Bmi': this.state.bmi.toFixed(1)
     }
 
     return (
