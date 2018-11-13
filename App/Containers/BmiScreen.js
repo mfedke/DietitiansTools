@@ -46,13 +46,11 @@ class BmiScreen extends Component {
           <RoundedButton
             onPress={() => {
               var heightIn = parseFloat(this.props.navigation.state.params.height_ft) * 12.0 + parseFloat(this.props.navigation.state.params.height_in)
-              console.log('heightIn: ' + heightIn)
+              var bmi = 0.0
 
-              console.log('weight: ' + parseFloat(this.props.navigation.state.params.weight_lbs))
-              this.setState({bmi: 703.0 * (parseFloat(this.props.navigation.state.params.weight_lbs) / (heightIn * heightIn)) * this.state.ampVal})
-              console.log('Button pressed, this.state: ' + this.state)
-              console.log('returning BMI: ' + this.state.bmi)
-              this.props.navigation.state.params.bmi = this.state.bmi
+              bmi = 703.0 * (parseFloat(this.props.navigation.state.params.weight_lbs) / (heightIn * heightIn)) * this.state.ampVal
+              this.setState({bmi: bmi})
+              this.props.navigation.state.params.bmi = bmi
               // call refreshState to ensure that the main screen redraws with all these updated state params
               this.props.navigation.state.params.refreshState(this.props.navigation.state.params)
             }}>
