@@ -161,8 +161,8 @@ class KcalScreen extends Component {
                 // Female: BMR = 10 * weight + 6.25 * height - 5 * age - 161
                 bmrBase = 10.0 * this.convertLbsToKg(parseFloat(this.props.navigation.state.params.weight_lbs)) +
                           6.25 * this.convertInToCm(heightIn) -
-                          5.0 * parseFloat(this.props.navigation.state.params.age) +
-                          5
+                          5.0 * parseFloat(this.props.navigation.state.params.age) -
+                          161
               }
               var bmrBoth = bmrBase * this.state.factors['mifflin']['activity']
               bmr = {'LL': bmrBoth, 'UL': bmrBoth}
