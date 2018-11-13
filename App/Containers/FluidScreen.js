@@ -100,7 +100,6 @@ class FluidScreen extends Component {
                 }
                 fluid = {'LL': fluidBase, 'UL': fluidBase}
               }
-              console.log('Button pressed, this.state: ' + this.state)
               console.log('returning fluid: ' + fluid['LL'] + ' - ' + fluid['UL'])
               this.props.navigation.state.params.fluid_min = fluid['LL']
               this.props.navigation.state.params.fluid_max = fluid['UL']

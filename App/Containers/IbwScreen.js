@@ -89,7 +89,6 @@ class IbwScreen extends Component {
                 }
               }
               ibw = {'LL': (ibwBase * 0.9 - this.state.plegiaVal) * this.state.ampVal, 'UL': (ibwBase * 1.1 - this.state.plegiaVal) * this.state.ampVal}
-              console.log('Button pressed, this.state: ' + this.state)
               console.log('returning IBW: ' + ibw['LL'] + ' - ' + ibw['UL'])
               this.props.navigation.state.params.ibw_min = ibw['LL']
               this.props.navigation.state.params.ibw_max = ibw['UL']

@@ -193,7 +193,6 @@ class KcalScreen extends Component {
               this.props.navigation.state.params.kcal_min = bmr['LL']
               this.props.navigation.state.params.kcal_max = bmr['UL']
             }
-            console.log('Button pressed, this.state: ' + this.state)
             console.log('returning BMR: ' + bmr['LL'] + ' - ' + bmr['UL'])
             this.props.navigation.state.params.bmr_min = bmr['LL']
             this.props.navigation.state.params.bmr_max = bmr['UL']

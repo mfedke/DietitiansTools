@@ -45,7 +45,7 @@ class SummaryScreen extends Component {
     this.setState({
       gender: 'female'
     }, function () {
-      window.alert('Gender: ' + this.state.gender + '\nAge: ' + this.state.age + '\nWeight: ' + this.state.weight_lbs + '\nHeight Ft: ' + this.state.height_ft + '\nHeight In: ' + this.state.height_in + '\nBMR: ' + this.state.bmr_min + ' - ' + this.state.bmr_max + '\nProtein: ' + this.state.protein)
+      //window.alert('Gender: ' + this.state.gender + '\nAge: ' + this.state.age + '\nWeight: ' + this.state.weight_lbs + '\nHeight Ft: ' + this.state.height_ft + '\nHeight In: ' + this.state.height_in + '\nBMR: ' + this.state.bmr_min + ' - ' + this.state.bmr_max + '\nProtein: ' + this.state.protein)
     })
   }
 
@@ -53,7 +53,7 @@ class SummaryScreen extends Component {
     this.setState({
       gender: 'male'
     }, function () {
-      window.alert('Gender: ' + this.state.gender + '\nAge: ' + this.state.age + '\nWeight: ' + this.state.weight_lbs + '\nHeight Ft: ' + this.state.height_ft + '\nHeight In: ' + this.state.height_in + '\nBMR: ' + this.state.bmr_min + ' - ' + this.state.bmr_max + '\nProtein: ' + this.state.protein)
+      //window.alert('Gender: ' + this.state.gender + '\nAge: ' + this.state.age + '\nWeight: ' + this.state.weight_lbs + '\nHeight Ft: ' + this.state.height_ft + '\nHeight In: ' + this.state.height_in + '\nBMR: ' + this.state.bmr_min + ' - ' + this.state.bmr_max + '\nProtein: ' + this.state.protein)
     })
   }
 
