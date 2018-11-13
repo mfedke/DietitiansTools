@@ -104,23 +104,25 @@ class SummaryScreen extends Component {
               value={this.state.text} />
           </View>
           <Text style={styles.LabelBar}>                   Gender</Text>
-          <View style={{flex: 1, flexDirection: 'row', justifyContent: 'center', alignSelf: 'center', borderWidth: 1, height: 100, width: undefined}}>
+          <View style={{flex: 1, flexDirection: 'row', justifyContent: 'center', alignSelf: 'center', alignItems: 'center', height: 114, width: undefined}}>
             <TouchableOpacity onPress={this.onPressFemale}>
-              <View style={{width: 40, height: 100}}>
-                <Image
-                  source={require('../../App/Images/female.png')}
-                  style={{width: 40, height: 100}}
-                  resizeMode='contain'
-                />
+              <View style={{borderBottomWidth: 4, borderColor: this.state.gender === 'female' ? 'gray' : 'rgba(0, 0, 0, 0)'}}>
+                <View style={{padding: 5}}>
+                  <Image
+                    source={require('../../App/Images/female45x100.png')}
+                    style={{width: 40, height: 100}}
+                  />
+                </View>
               </View>
             </TouchableOpacity>
             <TouchableOpacity onPress={this.onPressMale}>
-              <View style={{width: 40, height: 100}}>
-                <Image
-                  source={require('../../App/Images/male.png')}
-                  style={{width: 40, height: 100}}
-                  resizeMode='contain'
-                />
+              <View style={{borderBottomWidth: 4, borderColor: this.state.gender === 'male' ? 'gray' : 'rgba(0, 0, 0, 0)'}}>
+                <View style={{padding: 5}}>
+                  <Image
+                    source={require('../../App/Images/male45x100.png')}
+                    style={{width: 40, height: 100}}
+                  />
+                </View>
               </View>
             </TouchableOpacity>
           </View>
