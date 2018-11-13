@@ -27,31 +27,31 @@ const PrimaryNav = StackNavigator({
   KcalScreen: {
     screen: KcalScreen,
     navigationOptions: {
-      headerTitle: 'Dietitian\'s Tools - KCALScreen',
+      headerTitle: 'Dietitian\'s Tools - KCAL',
     },
   },
   ProteinScreen: {
     screen: ProteinScreen,
     navigationOptions: {
-      headerTitle: 'Dietitian\'s Tools - PROTEINScreen',
+      headerTitle: 'Dietitian\'s Tools - PROTEIN',
     },
   },
   FluidScreen: {
     screen: FluidScreen,
     navigationOptions: {
-      headerTitle: 'Dietitian\'s Tools - FLUIDScreen',
+      headerTitle: 'Dietitian\'s Tools - FLUID',
     },
   },
   IbwScreen: {
     screen: IbwScreen,
     navigationOptions: {
-      headerTitle: 'Dietitian\'s Tools - IBWScreen',
+      headerTitle: 'Dietitian\'s Tools - IBW',
     },
   },
   BmiScreen: {
     screen: BmiScreen,
     navigationOptions: {
-      headerTitle: 'Dietitian\'s Tools - BMIScreen',
+      headerTitle: 'Dietitian\'s Tools - BMI',
     },
   },
 }, {
