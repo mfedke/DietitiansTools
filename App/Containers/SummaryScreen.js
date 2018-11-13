@@ -78,12 +78,14 @@ class SummaryScreen extends Component {
             <TextInput
               placeholder='years'
               underlineColorAndroid='transparent'
+              keyboardType='numeric'
               style={styles.TextInput}
               onChangeText={(text) => this.setState({age: text})}
               value={this.state.text} />
             <TextInput
               placeholder='lbs'
               underlineColorAndroid='transparent'
+              keyboardType='numeric'
               style={styles.TextInput}
               onChangeText={(text) => this.setState({weight_lbs: text})}
               value={this.state.text} />
@@ -93,12 +95,14 @@ class SummaryScreen extends Component {
             <TextInput
               placeholder='ft'
               underlineColorAndroid='transparent'
+              keyboardType='numeric'
               style={styles.TextInput}
               onChangeText={(text) => this.setState({height_ft: text})}
               value={this.state.text} />
             <TextInput
               placeholder='in'
               underlineColorAndroid='transparent'
+              keyboardType='numeric'
               style={styles.TextInput}
               onChangeText={(text) => this.setState({height_in: text})}
               value={this.state.text} />
