@@ -3,6 +3,7 @@ import { ScrollView, View, Picker } from 'react-native'
 import RadioGroup from 'react-native-radio-buttons-group'
 import RoundedButton from '../Components/RoundedButton'
 import { connect } from 'react-redux'
+import { CheckBox } from 'react-native-elements'
 // Add Actions - replace 'Your' with whatever your reducer is called :)
 // import YourActions from '../Redux/YourRedux'
 
@@ -13,20 +14,6 @@ class IbwScreen extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      data: [
-        {
-          label: 'None',
-          value: 0
-        },
-        {
-          label: 'Paraplegia',
-          value: 10
-        },
-        {
-          label: 'Quadraplegia',
-          value: 15
-        }
-      ],
       plegiaVal: 0,
       ampVal: 1.0
     }
@@ -58,12 +45,28 @@ class IbwScreen extends Component {
             <Picker.Item label='Entire Leg - 16%' value={1.0 - 0.16} />
             <Picker.Item label='Both Entire Legs - 32%' value={1.0 - 0.32} />
           </Picker>
-          <RadioGroup radioButtons={this.state.data} onPress={(data) => {
-            let selectedButton = data.find(e => e.selected === true)
-            let newPlegiaVal = selectedButton ? selectedButton.value : data[0].value
-            console.log('setting plegiaVal to ' + newPlegiaVal)
-            this.setState({ plegiaVal: newPlegiaVal })
-          }} />
+          <CheckBox
+            title='Paraplegia'
+            checked={this.state.plegiaVal === 10}
+            onPress={() => {
+              if (this.state.plegiaVal === 10) {
+                this.setState({plegiaVal: 0})
+              } else {
+                this.setState({plegiaVal: 10})
+              }
+            }}
+          />
+          <CheckBox
+            title='Quadraplegia'
+            checked={this.state.plegiaVal === 15}
+            onPress={() => {
+              if (this.state.plegiaVal === 15) {
+                this.setState({plegiaVal: 0})
+              } else {
+                this.setState({plegiaVal: 15})
+              }
+            }}
+          />
           <RoundedButton
             onPress={() => {
               var ibw = {'LL': 0.0, 'UL': 0.0}
