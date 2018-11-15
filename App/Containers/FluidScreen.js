@@ -45,10 +45,6 @@ class FluidScreen extends Component {
     this.setState({mlkgFactors: mlkgFactors})
   }
 
-  convertInToCm = (inches) => {
-    return inches * 2.54
-  }
-
   convertLbsToKg = (lbs) => {
     return lbs * 0.453592
   }
