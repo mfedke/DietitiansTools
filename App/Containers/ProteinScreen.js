@@ -54,6 +54,10 @@ class ProteinScreen extends Component {
     }
   }
 
+  convertLbsToKg = (lbs) => {
+    return lbs * 0.453592
+  }
+
   render () {
     console.log('selectedVal: ' + this.state.selectedVal)
     return (
@@ -66,12 +70,13 @@ class ProteinScreen extends Component {
           }} />
           <RoundedButton
             onPress={() => {
+              let weightKg = this.convertLbsToKg(parseFloat(this.props.navigation.state.params.weight_lbs))
               let proteinRegex = /LL: ([0-9\.]+), UL: ([0-9\.]+)/
               let proteinMatch = proteinRegex.exec(this.state.selectedVal)
               let proteinLL = parseFloat(proteinMatch[1])
               let proteinUL = parseFloat(proteinMatch[2])
-              this.props.navigation.state.params.protein_min = proteinLL
-              this.props.navigation.state.params.protein_max = proteinUL
+              this.props.navigation.state.params.protein_min = proteinLL * weightKg
+              this.props.navigation.state.params.protein_max = proteinUL * weightKg
               // call refreshState to ensure that the main screen redraws with all these updated state params
               this.props.navigation.state.params.refreshState(this.props.navigation.state.params)
             }}>
