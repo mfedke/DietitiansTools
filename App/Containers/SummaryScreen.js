@@ -26,8 +26,6 @@ class SummaryScreen extends Component {
       weight_lbs: '0',
       height_ft: '0',
       height_in: '0',
-      bmr_min: 0.0,
-      bmr_max: 0.0,
       kcal_min: 0.0,
       kcal_max: 0.0,
       protein_min: 0.0,
@@ -45,7 +43,7 @@ class SummaryScreen extends Component {
     this.setState({
       gender: 'female'
     }, function () {
-      //window.alert('Gender: ' + this.state.gender + '\nAge: ' + this.state.age + '\nWeight: ' + this.state.weight_lbs + '\nHeight Ft: ' + this.state.height_ft + '\nHeight In: ' + this.state.height_in + '\nBMR: ' + this.state.bmr_min + ' - ' + this.state.bmr_max + '\nProtein: ' + this.state.protein)
+      //window.alert('Gender: ' + this.state.gender + '\nAge: ' + this.state.age + '\nWeight: ' + this.state.weight_lbs + '\nHeight Ft: ' + this.state.height_ft + '\nHeight In: ' + this.state.height_in + '\nBMR: ' + this.state.kcal_min + ' - ' + this.state.kcal_max + '\nProtein: ' + this.state.protein)
     })
   }
 
@@ -53,13 +51,13 @@ class SummaryScreen extends Component {
     this.setState({
       gender: 'male'
     }, function () {
-      //window.alert('Gender: ' + this.state.gender + '\nAge: ' + this.state.age + '\nWeight: ' + this.state.weight_lbs + '\nHeight Ft: ' + this.state.height_ft + '\nHeight In: ' + this.state.height_in + '\nBMR: ' + this.state.bmr_min + ' - ' + this.state.bmr_max + '\nProtein: ' + this.state.protein)
+      //window.alert('Gender: ' + this.state.gender + '\nAge: ' + this.state.age + '\nWeight: ' + this.state.weight_lbs + '\nHeight Ft: ' + this.state.height_ft + '\nHeight In: ' + this.state.height_in + '\nBMR: ' + this.state.kcal_min + ' - ' + this.state.kcal_max + '\nProtein: ' + this.state.protein)
     })
   }
 
   render () {
     var calculatedValStrings = {
-      'Kcal': this.state.bmr_min.toFixed(1) + ' - ' + this.state.bmr_max.toFixed(1),
+      'Kcal': this.state.kcal_min.toFixed(1) + ' - ' + this.state.kcal_max.toFixed(1),
       'Protein': this.state.protein_min.toFixed(1) + ' - ' + this.state.protein_max.toFixed(1),
       'Fluid': this.state.fluid_min.toFixed(1) + ' - ' + this.state.fluid_max.toFixed(1),
       'Ibw': this.state.ibw_min.toFixed(1) + ' - ' + this.state.ibw_max.toFixed(1),

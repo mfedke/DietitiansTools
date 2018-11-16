@@ -190,12 +190,10 @@ class KcalScreen extends Component {
               let kcalkgUL = parseFloat(kcalkgMatch[2])
               let weightKg = this.convertLbsToKg(parseFloat(this.props.navigation.state.params.weight_lbs))
               bmr = {'LL': kcalkgLL * weightKg, 'UL': kcalkgUL * weightKg}
-              this.props.navigation.state.params.kcal_min = bmr['LL']
-              this.props.navigation.state.params.kcal_max = bmr['UL']
             }
-            console.log('returning BMR: ' + bmr['LL'] + ' - ' + bmr['UL'])
-            this.props.navigation.state.params.bmr_min = bmr['LL']
-            this.props.navigation.state.params.bmr_max = bmr['UL']
+            console.log('returning KCal: ' + bmr['LL'] + ' - ' + bmr['UL'])
+            this.props.navigation.state.params.kcal_min = bmr['LL']
+            this.props.navigation.state.params.kcal_max = bmr['UL']
             // call refreshState to ensure that the main screen redraws with all these updated state params
             this.props.navigation.state.params.refreshState(this.props.navigation.state.params)
           }}>
