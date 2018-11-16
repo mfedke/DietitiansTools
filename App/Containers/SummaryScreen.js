@@ -20,6 +20,46 @@ class SummaryScreen extends Component {
       this.setState(state)
     }
 
+    const onGetKcalState = () => {
+      return this.KcalState
+    }
+
+    const onGetProteinState = () => {
+      return this.ProteinState
+    }
+
+    const onGetFluidState = () => {
+      return this.FluidState
+    }
+
+    const onGetIbwState = () => {
+      return this.IbwState
+    }
+
+    const onGetBmiState = () => {
+      return this.BmiState
+    }
+
+    const onUpdateKcalState = (state) => {
+      this.KcalState = state
+    }
+
+    const onUpdateProteinState = (state) => {
+      this.ProteinState = state
+    }
+
+    const onUpdateFluidState = (state) => {
+      this.FluidState = state
+    }
+
+    const onUpdateIbwState = (state) => {
+      this.IbwState = state
+    }
+
+    const onUpdateBmiState = (state) => {
+      this.BmiState = state
+    }
+
     this.state = {
       gender: 'female',
       age: '0',
@@ -35,24 +75,79 @@ class SummaryScreen extends Component {
       ibw_min: 0.0,
       ibw_max: 0.0,
       bmi: 0.0,
-      refreshState: onRefreshState
+      refreshState: onRefreshState,
+      getKcalState: onGetKcalState,
+      updateKcalState: onUpdateKcalState,
+      getProteinState: onGetProteinState,
+      updateProteinState: onUpdateProteinState,
+      getFluidState: onGetFluidState,
+      updateFluidState: onUpdateFluidState,
+      getIbwState: onGetIbwState,
+      updateIbwState: onUpdateIbwState,
+      getBmiState: onGetBmiState,
+      updateBmiState: onUpdateBmiState
     }
+
+    /* Store sub page state here in Summary Page so it can be maintained while navigating around */
+    this.KcalState = {
+      formula: 'mifflin',
+      factors: {'mifflin': {'activity': 1.2}, 'hb': {'activity': 1.0, 'stress': 'No stress - LL: 1.0, UL: 1.0'}},
+      KcalKg: 'LL: 18.0, UL: 22.0'
+    }
+
+    this.ProteinState = {
+      data: [
+        {
+          label: 'Pre-Dialysis: 0.6 - 0.8 gm/kg',
+          value: 'LL: 0.6, UL: 0.8'
+        },
+        {
+          label: 'Normal: 0.8 - 1.0 gm/kg',
+          value: 'LL: 0.8, UL: 1.0'
+        },
+        {
+          label: 'Older Adult > 65 yrs: 1.0 gm/kg',
+          value: 'LL: 1.0, UL: 1.0'
+        },
+        {
+          label: 'CKD w/ Dialysis 1.2 - 1.5 gm/kg',
+          value: 'LL: 1.2, UL: 1.5'
+        },
+        {
+          label: 'Pressure Sore: 1.25 - 1.5 gm/kg',
+          value: 'LL: 1.25, UL: 1.5'
+        },
+        {
+          label: 'Critical Illness: 1.2 - 2.0 gm/kg',
+          value: 'LL: 1.2, UL: 2.0'
+        }
+      ],
+      selectedVal: 'LL: 0.6, UL: 0.8'
+    }
+
+    this.FluidState = {
+      formula: 'mlkg',
+      mlkgFactors: 'LL: 25.0, UL: 30.0'
+    }
+
+    this.IbwState = {
+      plegiaVal: 0,
+      ampVal: 1.0
+    }
+
+    this.BmiState = {
+      ampVal: 1.0,
+      bmi: 0.0
+    }
+
   }
 
   onPressFemale = () => {
-    this.setState({
-      gender: 'female'
-    }, function () {
-      //window.alert('Gender: ' + this.state.gender + '\nAge: ' + this.state.age + '\nWeight: ' + this.state.weight_lbs + '\nHeight Ft: ' + this.state.height_ft + '\nHeight In: ' + this.state.height_in + '\nBMR: ' + this.state.kcal_min + ' - ' + this.state.kcal_max + '\nProtein: ' + this.state.protein)
-    })
+    this.setState({gender: 'female'})
   }
 
   onPressMale = () => {
-    this.setState({
-      gender: 'male'
-    }, function () {
-      //window.alert('Gender: ' + this.state.gender + '\nAge: ' + this.state.age + '\nWeight: ' + this.state.weight_lbs + '\nHeight Ft: ' + this.state.height_ft + '\nHeight In: ' + this.state.height_in + '\nBMR: ' + this.state.kcal_min + ' - ' + this.state.kcal_max + '\nProtein: ' + this.state.protein)
-    })
+    this.setState({gender: 'male'})
   }
 
   render () {

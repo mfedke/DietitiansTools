@@ -11,10 +11,11 @@ import styles from './Styles/BmiScreenStyle'
 class BmiScreen extends Component {
   constructor (props) {
     super(props)
-    this.state = {
-      ampVal: 1.0,
-      bmi: 0.0
-    }
+    this.state = props.navigation.state.params.getBmiState()
+  }
+
+  componentDidUpdate (prevProps) {
+    this.props.navigation.state.params.updateBmiState(this.state)
   }
 
   render () {

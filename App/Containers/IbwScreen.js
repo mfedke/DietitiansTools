@@ -13,10 +13,11 @@ import styles from './Styles/IbwScreenStyle'
 class IbwScreen extends Component {
   constructor (props) {
     super(props)
-    this.state = {
-      plegiaVal: 0,
-      ampVal: 1.0
-    }
+    this.state = props.navigation.state.params.getIbwState()
+  }
+
+  componentDidUpdate (prevProps) {
+    this.props.navigation.state.params.updateIbwState(this.state)
   }
 
   render () {

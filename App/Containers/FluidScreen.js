@@ -34,10 +34,7 @@ class FluidFactors extends React.Component {
 class FluidScreen extends Component {
   constructor (props) {
     super(props)
-    this.state = {
-      formula: 'mlkg',
-      mlkgFactors: 'LL: 25.0, UL: 30.0'
-    }
+    this.state = props.navigation.state.params.getFluidState()
   }
 
   updateMlkgFactors = (mlkgFactors) => {
@@ -47,6 +44,10 @@ class FluidScreen extends Component {
 
   convertLbsToKg = (lbs) => {
     return lbs * 0.453592
+  }
+
+  componentDidUpdate (prevProps) {
+    this.props.navigation.state.params.updateFluidState(this.state)
   }
 
   render () {
