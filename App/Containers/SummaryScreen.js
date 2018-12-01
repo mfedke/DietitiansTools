@@ -225,15 +225,15 @@ class SummaryScreen extends Component {
           </View>
           {buttons.map((name, i) => [
             <View key={i} style={{flex: 1, flexDirection: 'row'}}>
-              <View key={i} style={{flexBasis: '60%'}}>
+              <View key={i + 10} style={{flexBasis: '60%'}}>
                 <RoundedButton
-                  key={i}
+                  key={i + 20}
                   onPress={() => this.props.navigation.navigate(name.concat('Screen'), this.state)}>
                   {name}
                 </RoundedButton>
               </View>
-              <View key={i} style={{flexBasis: '40%'}}>
-                <View key={i} style={{padding: '10%'}}>
+              <View key={i + 30} style={{flexBasis: '40%'}}>
+                <View key={i + 40} style={{padding: '10%'}}>
                   <Button title={calculatedValStrings[name]} disabled onPress={noop} />
                 </View>
               </View>
