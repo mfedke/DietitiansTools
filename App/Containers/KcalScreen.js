@@ -94,19 +94,16 @@ class KcalScreen extends Component {
 //          onPress={() => { window.alert('Gender: ' + this.props.navigation.state.params.gender + '\nAge: ' + this.props.navigation.state.params.age + '\nWeight: ' + this.props.navigation.state.params.weight + '\nHeight Ft: ' + this.props.navigation.state.params.height_ft + '\nHeight In: ' + this.props.navigation.state.params.height_in); this.props.navigation.state.params.age = 100 }}>
 
   updateHBFactors = (hbFactors) => {
-    console.log('updateHBFactors, setting hb to: ', hbFactors)
     const factorsCopy = update(this.state.factors, {'hb': {$set: hbFactors}})
     this.setState({factors: factorsCopy})
   }
 
   updateMifflinFactors = (mifflinFactors) => {
-    console.log('updateMifflinFactors, setting mifflin to: ', mifflinFactors)
     const factorsCopy = update(this.state.factors, {'mifflin': {$set: mifflinFactors}})
     this.setState({factors: factorsCopy})
   }
 
   updateKcalKg = (KcalKg) => {
-    console.log('updateKcalKg, setting KcalKg to: ', KcalKg)
     this.setState({KcalKg: KcalKg})
   }
 
@@ -192,7 +189,6 @@ class KcalScreen extends Component {
               let weightKg = this.convertLbsToKg(parseFloat(this.props.navigation.state.params.weight_lbs))
               bmr = {'LL': kcalkgLL * weightKg, 'UL': kcalkgUL * weightKg}
             }
-            console.log('returning KCal: ' + bmr['LL'] + ' - ' + bmr['UL'])
             this.props.navigation.state.params.kcal_min = bmr['LL']
             this.props.navigation.state.params.kcal_max = bmr['UL']
             // call refreshState to ensure that the main screen redraws with all these updated state params

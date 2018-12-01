@@ -38,7 +38,6 @@ class FluidScreen extends Component {
   }
 
   updateMlkgFactors = (mlkgFactors) => {
-    console.log('updateMlkgFactors, setting mlkgFactors to: ' + mlkgFactors)
     this.setState({mlkgFactors: mlkgFactors})
   }
 
@@ -77,7 +76,6 @@ class FluidScreen extends Component {
                 let mlkgLL = parseFloat(mlkgMatch[1])
                 let mlkgUL = parseFloat(mlkgMatch[2])
                 let weightKg = this.convertLbsToKg(parseFloat(this.props.navigation.state.params.weight_lbs))
-                console.log('calculating mlkg with LL: ' + mlkgLL + ' UL: ' + mlkgUL + ' weightKg: ' + weightKg)
                 fluid = {'LL': mlkgLL * weightKg, 'UL': mlkgUL * weightKg}
               } else if (this.state.formula === 'mlkcal') {
                 fluid = {'LL': this.props.navigation.state.params.kcal_min, 'UL': this.props.navigation.state.params.kcal_max}
@@ -97,7 +95,6 @@ class FluidScreen extends Component {
                 }
                 fluid = {'LL': fluidBase, 'UL': fluidBase}
               }
-              console.log('returning fluid: ' + fluid['LL'] + ' - ' + fluid['UL'])
               this.props.navigation.state.params.fluid_min = fluid['LL']
               this.props.navigation.state.params.fluid_max = fluid['UL']
               // call refreshState to ensure that the main screen redraws with all these updated state params

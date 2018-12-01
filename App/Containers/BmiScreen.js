@@ -25,7 +25,6 @@ class BmiScreen extends Component {
           <Picker
             selectedValue={this.state.ampVal}
             onValueChange={(itemValue, itemIndex) => {
-              console.log('setting ampVal to: ' + itemValue)
               this.setState({ampVal: itemValue})
             }}
           >

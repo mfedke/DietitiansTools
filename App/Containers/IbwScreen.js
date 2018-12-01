@@ -27,7 +27,6 @@ class IbwScreen extends Component {
           <Picker
             selectedValue={this.state.ampVal}
             onValueChange={(itemValue, itemIndex) => {
-              console.log('setting ampVal to: ' + itemValue)
               this.setState({ampVal: itemValue})
             }}
           >
@@ -73,27 +72,21 @@ class IbwScreen extends Component {
               var ibw = {'LL': 0.0, 'UL': 0.0}
               var ibwBase = 0.0
               var heightIn = parseFloat(this.props.navigation.state.params.height_ft) * 12.0 + parseFloat(this.props.navigation.state.params.height_in)
-              console.log('heightIn: ' + heightIn)
 
               if (this.props.navigation.state.params.gender === 'male') {
                 if (heightIn <= 60) {
                   ibwBase = 106 - (60 - heightIn) * 2.5
-                  console.log('ibwBase male <=5ft: ' + ibwBase)
                 } else {
                   ibwBase = 106 + (heightIn - 60) * 6.0
-                  console.log('ibwBase male >5ft: ' + ibwBase)
                 }
               } else {
                 if (heightIn <= 60) {
                   ibwBase = 100 - (60 - heightIn) * 2.5
-                  console.log('ibwBase female <=5ft: ' + ibwBase)
                 } else {
                   ibwBase = 100 + (heightIn - 60) * 5.0
-                  console.log('ibwBase female >5ft: ' + ibwBase)
                 }
               }
               ibw = {'LL': (ibwBase * 0.9 - this.state.plegiaVal) * this.state.ampVal, 'UL': (ibwBase * 1.1 - this.state.plegiaVal) * this.state.ampVal}
-              console.log('returning IBW: ' + ibw['LL'] + ' - ' + ibw['UL'])
               this.props.navigation.state.params.ibw_min = ibw['LL']
               this.props.navigation.state.params.ibw_max = ibw['UL']
               // call refreshState to ensure that the main screen redraws with all these updated state params

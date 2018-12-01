@@ -24,7 +24,6 @@ class ProteinScreen extends Component {
   }
 
   render () {
-    console.log('selectedVal: ' + this.state.selectedVal)
     return (
       <ScrollView style={styles.container}>
         <View style={styles.container}>
