@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { ScrollView, View, Picker, Text } from 'react-native'
-import RoundedButton from '../Components/RoundedButton'
 import { connect } from 'react-redux'
 // Add Actions - replace 'Your' with whatever your reducer is called :)
 // import YourActions from '../Redux/YourRedux'
@@ -11,11 +10,18 @@ import styles from './Styles/BmiScreenStyle'
 class BmiScreen extends Component {
   constructor (props) {
     super(props)
+    // call updateBmiState first to get an updated calculation
+    this.props.navigation.state.params.updateBmiState(props.navigation.state.params.getBmiState())
     this.state = props.navigation.state.params.getBmiState()
   }
 
-  componentDidUpdate (prevProps) {
+  notifySummaryPage (ampVal) {
+    // first, send the new state to the Summary page so it can run the calculation on this new state
+    this.state.ampVal = ampVal
     this.props.navigation.state.params.updateBmiState(this.state)
+    // then, pull the calc results back here to update this page with the most current result
+    let tmp = this.props.navigation.state.params.getBmiState()
+    this.setState({ampVal: ampVal, bmi: tmp.bmi})
   }
 
   render () {
@@ -25,7 +31,7 @@ class BmiScreen extends Component {
           <Picker
             selectedValue={this.state.ampVal}
             onValueChange={(itemValue, itemIndex) => {
-              this.setState({ampVal: itemValue})
+              this.notifySummaryPage(itemValue)
             }}
           >
             <Picker.Item label='No Amputation' value={1.0} />
@@ -43,23 +49,10 @@ class BmiScreen extends Component {
             <Picker.Item label='Entire Leg - 16%' value={1.0 - 0.16} />
             <Picker.Item label='Both Entire Legs - 32%' value={1.0 - 0.32} />
           </Picker>
-          <RoundedButton
-            onPress={() => {
-              var heightIn = parseFloat(this.props.navigation.state.params.height_ft) * 12.0 + parseFloat(this.props.navigation.state.params.height_in)
-              var bmi = 0.0
-
-              bmi = 703.0 * (parseFloat(this.props.navigation.state.params.weight_lbs) / (heightIn * heightIn)) * this.state.ampVal
-              this.setState({bmi: bmi})
-              this.props.navigation.state.params.bmi = bmi
-              // call refreshState to ensure that the main screen redraws with all these updated state params
-              this.props.navigation.state.params.refreshState(this.props.navigation.state.params)
-            }}>
-            Calculate
-          </RoundedButton>
           <View style={{flex: 1, flexDirection: 'row', justifyContent: 'center', alignSelf: 'center', alignItems: 'center', borderWidth: 1, height: 30, width: '80%'}}>
             <Text>BMI: {this.state.bmi.toFixed(1)}</Text>
           </View>
-          <View style={{flex: 1, flexDirection: 'row', justifyContent: 'center', alignSelf: 'center', height: 30, width: '80%'}}/>
+          <View style={{flex: 1, flexDirection: 'row', justifyContent: 'center', alignSelf: 'center', height: 30, width: '80%'}} />
           <View style={{flex: 1, flexDirection: 'row', justifyContent: 'center', alignSelf: 'center', borderWidth: 1, height: 30, width: '80%'}}>
             <View style={{flex: 1, justifyContent: 'center', alignItems: 'center', borderRightWidth: 1}}>
               <Text>Classification</Text>

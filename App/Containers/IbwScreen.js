@@ -1,7 +1,5 @@
 import React, { Component } from 'react'
-import { ScrollView, View, Picker } from 'react-native'
-import RadioGroup from 'react-native-radio-buttons-group'
-import RoundedButton from '../Components/RoundedButton'
+import { ScrollView, View, Picker, Text } from 'react-native'
 import { connect } from 'react-redux'
 import { CheckBox } from 'react-native-elements'
 // Add Actions - replace 'Your' with whatever your reducer is called :)
@@ -16,8 +14,14 @@ class IbwScreen extends Component {
     this.state = props.navigation.state.params.getIbwState()
   }
 
-  componentDidUpdate (prevProps) {
+  notifySummaryPage (ampVal, plegiaVal) {
+    // first, send the new state to the Summary page so it can run the calculation on this new state
+    this.state.ampVal = ampVal
+    this.state.plegiaVal = plegiaVal
     this.props.navigation.state.params.updateIbwState(this.state)
+    // then, pull the calc results back here to update this page with the most current results
+    let tmp = this.props.navigation.state.params.getIbwState()
+    this.setState({ampVal: ampVal, plegiaVal: plegiaVal, ibw_min: tmp.ibw_min, ibw_max: tmp.ibw_max})
   }
 
   render () {
@@ -27,7 +31,7 @@ class IbwScreen extends Component {
           <Picker
             selectedValue={this.state.ampVal}
             onValueChange={(itemValue, itemIndex) => {
-              this.setState({ampVal: itemValue})
+              this.notifySummaryPage(itemValue, this.state.plegiaVal)
             }}
           >
             <Picker.Item label='No Amputation' value={1.0} />
@@ -50,9 +54,9 @@ class IbwScreen extends Component {
             checked={this.state.plegiaVal === 10}
             onPress={() => {
               if (this.state.plegiaVal === 10) {
-                this.setState({plegiaVal: 0})
+                this.notifySummaryPage(this.state.ampVal, 0)
               } else {
-                this.setState({plegiaVal: 10})
+                this.notifySummaryPage(this.state.ampVal, 10)
               }
             }}
           />
@@ -61,39 +65,15 @@ class IbwScreen extends Component {
             checked={this.state.plegiaVal === 15}
             onPress={() => {
               if (this.state.plegiaVal === 15) {
-                this.setState({plegiaVal: 0})
+                this.notifySummaryPage(this.state.ampVal, 0)
               } else {
-                this.setState({plegiaVal: 15})
+                this.notifySummaryPage(this.state.ampVal, 15)
               }
             }}
           />
-          <RoundedButton
-            onPress={() => {
-              var ibw = {'LL': 0.0, 'UL': 0.0}
-              var ibwBase = 0.0
-              var heightIn = parseFloat(this.props.navigation.state.params.height_ft) * 12.0 + parseFloat(this.props.navigation.state.params.height_in)
-
-              if (this.props.navigation.state.params.gender === 'male') {
-                if (heightIn <= 60) {
-                  ibwBase = 106 - (60 - heightIn) * 2.5
-                } else {
-                  ibwBase = 106 + (heightIn - 60) * 6.0
-                }
-              } else {
-                if (heightIn <= 60) {
-                  ibwBase = 100 - (60 - heightIn) * 2.5
-                } else {
-                  ibwBase = 100 + (heightIn - 60) * 5.0
-                }
-              }
-              ibw = {'LL': (ibwBase * 0.9 - this.state.plegiaVal) * this.state.ampVal, 'UL': (ibwBase * 1.1 - this.state.plegiaVal) * this.state.ampVal}
-              this.props.navigation.state.params.ibw_min = ibw['LL']
-              this.props.navigation.state.params.ibw_max = ibw['UL']
-              // call refreshState to ensure that the main screen redraws with all these updated state params
-              this.props.navigation.state.params.refreshState(this.props.navigation.state.params)
-            }}>
-            Calculate
-          </RoundedButton>
+          <View style={{flex: 1, flexDirection: 'row', justifyContent: 'center', alignSelf: 'center', alignItems: 'center', borderWidth: 1, height: 30, width: '80%'}}>
+            <Text>IBW: {this.state.ibw_min.toFixed(1)} - {this.state.ibw_max.toFixed(1)}</Text>
+          </View>
         </View>
       </ScrollView>
     )

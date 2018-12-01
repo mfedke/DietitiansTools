@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
-import { View, Picker, Text } from 'react-native'
+import { View, ScrollView, Picker, Text } from 'react-native'
 import { connect } from 'react-redux'
-import RoundedButton from '../Components/RoundedButton'
 import update from 'immutability-helper'
 // Add Actions - replace 'Your' with whatever your reducer is called :)
 // import YourActions from '../Redux/YourRedux'
@@ -93,110 +92,59 @@ class KcalScreen extends Component {
 // Example of passing state back and forth through react navigation (not sure if it's ok to set this state directly or not, but couldn't get getParam/setParam to work - undefined)
 //          onPress={() => { window.alert('Gender: ' + this.props.navigation.state.params.gender + '\nAge: ' + this.props.navigation.state.params.age + '\nWeight: ' + this.props.navigation.state.params.weight + '\nHeight Ft: ' + this.props.navigation.state.params.height_ft + '\nHeight In: ' + this.props.navigation.state.params.height_in); this.props.navigation.state.params.age = 100 }}>
 
+  notifySummaryPage (formula, factors, KcalKg) {
+    // first, send the new state to the Summary page so it can run the calculation on this new state
+    this.state.formula = formula
+    this.state.factors = factors
+    this.state.KcalKg = KcalKg
+    this.props.navigation.state.params.updateKcalState(this.state)
+    // then, pull the calc results back here to update this page with the most current results
+    let tmp = this.props.navigation.state.params.getKcalState()
+    this.setState({formula: formula, factors: factors, KcalKg: KcalKg, kcal_min: tmp.kcal_min, kcal_max: tmp.kcal_max})
+  }
+
   updateHBFactors = (hbFactors) => {
     const factorsCopy = update(this.state.factors, {'hb': {$set: hbFactors}})
-    this.setState({factors: factorsCopy})
+    this.notifySummaryPage(this.state.formula, factorsCopy, this.state.KcalKg)
   }
 
   updateMifflinFactors = (mifflinFactors) => {
     const factorsCopy = update(this.state.factors, {'mifflin': {$set: mifflinFactors}})
-    this.setState({factors: factorsCopy})
+    this.notifySummaryPage(this.state.formula, factorsCopy, this.state.KcalKg)
   }
 
   updateKcalKg = (KcalKg) => {
-    this.setState({KcalKg: KcalKg})
-  }
-
-  convertInToCm = (inches) => {
-    return inches * 2.54
-  }
-
-  convertLbsToKg = (lbs) => {
-    return lbs * 0.453592
-  }
-
-  componentDidUpdate (prevProps) {
-    this.props.navigation.state.params.updateKcalState(this.state)
+    this.notifySummaryPage(this.state.formula, this.state.factors, KcalKg)
   }
 
   render () {
     return (
-      <View>
-        <Picker
-          selectedValue={this.state.formula}
-          onValueChange={(itemValue, itemIndex) => {
-            this.setState({formula: itemValue})
-          }}
-        >
-          <Picker.Item label='Mifflin St. Jeor' value='mifflin' />
-          <Picker.Item label='Harris-Benedict' value='hb' />
-          <Picker.Item label='Kcal/Kg' value='kcalkg' />
-        </Picker>
-        <KcalFactors
-          formula={this.state.formula}
-          hbFactors={this.state.factors.hb}
-          updateHBFactors={this.updateHBFactors}
-          mifflinFactors={this.state.factors.mifflin}
-          updateMifflinFactors={this.updateMifflinFactors}
-          KcalKg={this.state.KcalKg}
-          updateKcalKg={this.updateKcalKg}
-        />
-        <RoundedButton
-          onPress={() => {
-            var bmrBase = 0
-            var bmr = 0
-            var heightIn = parseFloat(this.props.navigation.state.params.height_ft) * 12.0 + parseFloat(this.props.navigation.state.params.height_in)
-            var LLULRegex = /LL: ([0-9\.]+), UL: ([0-9\.]+)/
-
-            if (this.state.formula === 'mifflin') {
-              if (this.props.navigation.state.params.gender === 'male') {
-                // Male: BMR = 10 * weight + 6.25 * height - 5 * age + 5
-                bmrBase = 10.0 * this.convertLbsToKg(parseFloat(this.props.navigation.state.params.weight_lbs)) +
-                          6.25 * this.convertInToCm(heightIn) -
-                          5.0 * parseFloat(this.props.navigation.state.params.age) +
-                          5
-              } else if (this.props.navigation.state.params.gender === 'female') {
-                // Female: BMR = 10 * weight + 6.25 * height - 5 * age - 161
-                bmrBase = 10.0 * this.convertLbsToKg(parseFloat(this.props.navigation.state.params.weight_lbs)) +
-                          6.25 * this.convertInToCm(heightIn) -
-                          5.0 * parseFloat(this.props.navigation.state.params.age) -
-                          161
-              }
-              var bmrBoth = bmrBase * this.state.factors['mifflin']['activity']
-              bmr = {'LL': bmrBoth, 'UL': bmrBoth}
-            } else if (this.state.formula === 'hb') {
-              if (this.props.navigation.state.params.gender === 'male') {
-                // Male: RMR = 13.75 * weight + 5 * height - 6.75 * age + 66.47
-                bmrBase = 13.75 * this.convertLbsToKg(parseFloat(this.props.navigation.state.params.weight_lbs)) +
-                          5 * this.convertInToCm(heightIn) -
-                          6.75 * parseFloat(this.props.navigation.state.params.age) +
-                          66.47
-              } else if (this.props.navigation.state.params.gender === 'female') {
-                // Female: RMR = 9.56 * weight + 1.84 * height - 4.67 * age + 655.09
-                bmrBase = 9.56 * this.convertLbsToKg(parseFloat(this.props.navigation.state.params.weight_lbs)) +
-                          1.84 * this.convertInToCm(heightIn) -
-                          4.67 * parseFloat(this.props.navigation.state.params.age) +
-                          655.09
-              }
-              let stressMatch = LLULRegex.exec(this.state.factors['hb']['stress'])
-              let stressLL = parseFloat(stressMatch[1])
-              let stressUL = parseFloat(stressMatch[2])
-              bmr = {'LL': bmrBase * this.state.factors['hb']['activity'] * stressLL, 'UL': bmrBase * this.state.factors['hb']['activity'] * stressUL}
-            } else if (this.state.formula === 'kcalkg') {
-              let kcalkgMatch = LLULRegex.exec(this.state.KcalKg)
-              let kcalkgLL = parseFloat(kcalkgMatch[1])
-              let kcalkgUL = parseFloat(kcalkgMatch[2])
-              let weightKg = this.convertLbsToKg(parseFloat(this.props.navigation.state.params.weight_lbs))
-              bmr = {'LL': kcalkgLL * weightKg, 'UL': kcalkgUL * weightKg}
-            }
-            this.props.navigation.state.params.kcal_min = bmr['LL']
-            this.props.navigation.state.params.kcal_max = bmr['UL']
-            // call refreshState to ensure that the main screen redraws with all these updated state params
-            this.props.navigation.state.params.refreshState(this.props.navigation.state.params)
-          }}>
-          Calculate
-        </RoundedButton>
-      </View>
+      <ScrollView>
+        <View>
+          <Picker
+            selectedValue={this.state.formula}
+            onValueChange={(itemValue, itemIndex) => {
+              this.notifySummaryPage(itemValue, this.state.factors, this.state.KcalKg)
+            }}
+          >
+            <Picker.Item label='Mifflin St. Jeor' value='mifflin' />
+            <Picker.Item label='Harris-Benedict' value='hb' />
+            <Picker.Item label='Kcal/Kg' value='kcalkg' />
+          </Picker>
+          <KcalFactors
+            formula={this.state.formula}
+            hbFactors={this.state.factors.hb}
+            updateHBFactors={this.updateHBFactors}
+            mifflinFactors={this.state.factors.mifflin}
+            updateMifflinFactors={this.updateMifflinFactors}
+            KcalKg={this.state.KcalKg}
+            updateKcalKg={this.updateKcalKg}
+          />
+          <View style={{flex: 1, flexDirection: 'row', justifyContent: 'center', alignSelf: 'center', alignItems: 'center', borderWidth: 1, height: 30, width: '80%'}}>
+            <Text>Kcal: {this.state.kcal_min.toFixed(1)} - {this.state.kcal_max.toFixed(1)}</Text>
+          </View>
+        </View>
+      </ScrollView>
     )
   }
 }

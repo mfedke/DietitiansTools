@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { View, ScrollView, Text } from 'react-native'
 import { connect } from 'react-redux'
-import RoundedButton from '../Components/RoundedButton'
 // Add Actions - replace 'Your' with whatever your reducer is called :)
 // import YourActions from '../Redux/YourRedux'
 import RadioGroup from 'react-native-radio-buttons-group'
@@ -15,12 +14,13 @@ class ProteinScreen extends Component {
     this.state = props.navigation.state.params.getProteinState()
   }
 
-  convertLbsToKg = (lbs) => {
-    return lbs * 0.453592
-  }
-
-  componentDidUpdate (prevProps) {
+  notifySummaryPage (selectedVal) {
+    // first, send the new state to the Summary page so it can run the calculation on this new state
+    this.state.selectedVal = selectedVal
     this.props.navigation.state.params.updateProteinState(this.state)
+    // then, pull the calc results back here to update this page with the most current results
+    let tmp = this.props.navigation.state.params.getProteinState()
+    this.setState({selectedVal: selectedVal, protein_min: tmp.protein_min, protein_max: tmp.protein_max})
   }
 
   render () {
@@ -30,22 +30,11 @@ class ProteinScreen extends Component {
           <RadioGroup radioButtons={this.state.data} onPress={(data) => {
             let selectedButton = data.find(e => e.selected === true)
             let newSelectedVal = selectedButton ? selectedButton.value : data[0].value
-            this.setState({ selectedVal: newSelectedVal })
+            this.notifySummaryPage(newSelectedVal)
           }} />
-          <RoundedButton
-            onPress={() => {
-              let weightKg = this.convertLbsToKg(parseFloat(this.props.navigation.state.params.weight_lbs))
-              let proteinRegex = /LL: ([0-9\.]+), UL: ([0-9\.]+)/
-              let proteinMatch = proteinRegex.exec(this.state.selectedVal)
-              let proteinLL = parseFloat(proteinMatch[1])
-              let proteinUL = parseFloat(proteinMatch[2])
-              this.props.navigation.state.params.protein_min = proteinLL * weightKg
-              this.props.navigation.state.params.protein_max = proteinUL * weightKg
-              // call refreshState to ensure that the main screen redraws with all these updated state params
-              this.props.navigation.state.params.refreshState(this.props.navigation.state.params)
-            }}>
-            Calculate
-          </RoundedButton>
+          <View style={{flex: 1, flexDirection: 'row', justifyContent: 'center', alignSelf: 'center', alignItems: 'center', borderWidth: 1, height: 30, width: '80%'}}>
+            <Text>Protein: {this.state.protein_min.toFixed(1)} - {this.state.protein_max.toFixed(1)}</Text>
+          </View>
         </View>
       </ScrollView>
     )

@@ -1,8 +1,6 @@
 import React, { Component } from 'react'
 import { ScrollView, View, Picker, Text } from 'react-native'
-import RoundedButton from '../Components/RoundedButton'
 import { connect } from 'react-redux'
-import update from 'immutability-helper'
 // Add Actions - replace 'Your' with whatever your reducer is called :)
 // import YourActions from '../Redux/YourRedux'
 
@@ -38,15 +36,17 @@ class FluidScreen extends Component {
   }
 
   updateMlkgFactors = (mlkgFactors) => {
-    this.setState({mlkgFactors: mlkgFactors})
+    this.notifySummaryPage (this.state.formula, mlkgFactors)
   }
 
-  convertLbsToKg = (lbs) => {
-    return lbs * 0.453592
-  }
-
-  componentDidUpdate (prevProps) {
+  notifySummaryPage (formula, mlkgFactors) {
+    // first, send the new state to the Summary page so it can run the calculation on this new state
+    this.state.formula = formula
+    this.state.mlkgFactors = mlkgFactors
     this.props.navigation.state.params.updateFluidState(this.state)
+    // then, pull the calc results back here to update this page with the most current results
+    let tmp = this.props.navigation.state.params.getFluidState()
+    this.setState({formula: formula, mlkgFactors: mlkgFactors, fluid_min: tmp.fluid_min, fluid_max: tmp.fluid_max})
   }
 
   render () {
@@ -55,7 +55,7 @@ class FluidScreen extends Component {
         <View>
           <Picker
             selectedValue={this.state.formula}
-            onValueChange={(itemValue, itemIndex) => this.setState({formula: itemValue})}
+            onValueChange={(itemValue, itemIndex) => this.notifySummaryPage(itemValue, this.state.mlkgFactors)}
           >
             <Picker.Item label='ml/kg' value='mlkg' />
             <Picker.Item label='1 ml/kcal' value='mlkcal' />
@@ -66,42 +66,9 @@ class FluidScreen extends Component {
             mlkgFactors={this.state.mlkgFactors}
             updateMlkgFactors={this.updateMlkgFactors}
           />
-          <RoundedButton
-            onPress={() => {
-              var fluid = 0
-              var LLULRegex = /LL: ([0-9\.]+), UL: ([0-9\.]+)/
-
-              if (this.state.formula === 'mlkg') {
-                let mlkgMatch = LLULRegex.exec(this.state.mlkgFactors)
-                let mlkgLL = parseFloat(mlkgMatch[1])
-                let mlkgUL = parseFloat(mlkgMatch[2])
-                let weightKg = this.convertLbsToKg(parseFloat(this.props.navigation.state.params.weight_lbs))
-                fluid = {'LL': mlkgLL * weightKg, 'UL': mlkgUL * weightKg}
-              } else if (this.state.formula === 'mlkcal') {
-                fluid = {'LL': this.props.navigation.state.params.kcal_min, 'UL': this.props.navigation.state.params.kcal_max}
-              } else if (this.state.formula === 'hs') {
-                let weightKg = this.convertLbsToKg(parseFloat(this.props.navigation.state.params.weight_lbs))
-                let fluidBase = 0.0
-                if (weightKg <= 10) {
-                  fluidBase = 100.0 * weightKg
-                } else if (weightKg <= 20.0) {
-                  fluidBase = 1000.0 + (weightKg - 10.0) * 50.0
-                } else {
-                  if (parseFloat(this.props.navigation.state.params.age) <= 50) {
-                    fluidBase = 1500.0 + (weightKg - 20.0) * 20.0
-                  } else {
-                    fluidBase = 1500.0 + (weightKg - 20.0) * 15.0
-                  }
-                }
-                fluid = {'LL': fluidBase, 'UL': fluidBase}
-              }
-              this.props.navigation.state.params.fluid_min = fluid['LL']
-              this.props.navigation.state.params.fluid_max = fluid['UL']
-              // call refreshState to ensure that the main screen redraws with all these updated state params
-              this.props.navigation.state.params.refreshState(this.props.navigation.state.params)
-            }}>
-            Calculate
-          </RoundedButton>
+          <View style={{flex: 1, flexDirection: 'row', justifyContent: 'center', alignSelf: 'center', alignItems: 'center', borderWidth: 1, height: 30, width: '80%'}}>
+            <Text>Fluid: {this.state.fluid_min.toFixed(1)} - {this.state.fluid_max.toFixed(1)}</Text>
+          </View>
         </View>
       </ScrollView>
     )
