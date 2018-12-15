@@ -429,6 +429,11 @@ class SummaryScreen extends Component {
               </View>
             </View>
           ])}
+          <View style={{flex: 1, flexDirection: 'row', justifyContent: 'flex-end', alignSelf: 'center', alignItems: 'center', height: 60, width: '90%'}}>
+            <TouchableOpacity onPress={() => this.props.navigation.navigate('DisclaimerScreen', this.state)}>
+              <Text>Disclaimer</Text>
+            </TouchableOpacity>
+          </View>
         </View>
       </ScrollView>
     )

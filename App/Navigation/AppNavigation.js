@@ -1,4 +1,5 @@
 import { StackNavigator } from 'react-navigation'
+import DisclaimerScreen from '../Containers/DisclaimerScreen'
 import BmiScreen from '../Containers/BmiScreen'
 import IbwScreen from '../Containers/IbwScreen'
 import FluidScreen from '../Containers/FluidScreen'
@@ -52,6 +53,12 @@ const PrimaryNav = StackNavigator({
     screen: BmiScreen,
     navigationOptions: {
       headerTitle: 'Dietitian\'s Tools - BMI',
+    },
+  },
+  DisclaimerScreen: {
+    screen: DisclaimerScreen,
+    navigationOptions: {
+      headerTitle: 'Dietitian\'s Tools - Disclaimer',
     },
   },
 }, {
