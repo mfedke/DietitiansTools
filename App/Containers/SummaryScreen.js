@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { View, Text, TextInput, Image, ScrollView, TouchableOpacity, Button } from 'react-native'
 import { connect } from 'react-redux'
 import RoundedButton from '../Components/RoundedButton'
+import PropTypes from 'prop-types'
 // Add Actions - replace 'Your' with whatever your reducer is called :)
 // import YourActions from '../Redux/YourRedux'
 
@@ -11,6 +12,28 @@ import styles from './Styles/SummaryScreenStyle'
 const buttons = ['Kcal', 'Protein', 'Fluid', 'Ibw', 'Bmi']
 
 const noop = () => {}
+
+class FocusableTextInput extends TextInput {
+  // Props:
+  static propTypes = {
+    focus: PropTypes.bool
+  }
+
+  static defaultProps = {
+    focus: false
+  }
+
+  // Methods:
+  focus () {
+    this._component.focus()
+  }
+
+  componentWillReceiveProps (nextProps) {
+    const {focus} = nextProps
+
+    focus && this.focus()
+  }
+}
 
 class SummaryScreen extends Component {
   constructor (props) {
@@ -90,7 +113,10 @@ class SummaryScreen extends Component {
       getIbwState: onGetIbwState,
       updateIbwState: onUpdateIbwState,
       getBmiState: onGetBmiState,
-      updateBmiState: onUpdateBmiState
+      updateBmiState: onUpdateBmiState,
+      focusWeightInput: false,
+      focusHeightFtInput: false,
+      focusHeightInInput: false
     }
 
     /* Store sub page state here in Summary Page so it can be maintained while navigating around */
@@ -153,6 +179,42 @@ class SummaryScreen extends Component {
       ampVal: 1.0,
       bmi: 0.0
     }
+  }
+
+  clearInputFocus = () => {
+    this.setState({
+      focusWeightInput: false,
+      focusHeightFtInput: false,
+      focusHeightInInput: false
+    })
+  }
+
+  handleAgeInputSubmit = () => {
+    this.setState({
+      focusWeightInput: true,
+      focusHeightFtInput: false,
+      focusHeightInInput: false
+    })
+  }
+
+  handleWeightInputSubmit = () => {
+    this.setState({
+      focusWeightInput: false,
+      focusHeightFtInput: true,
+      focusHeightInInput: false
+    })
+  }
+
+  handleHeightFtInputSubmit = () => {
+    this.setState({
+      focusWeightInput: false,
+      focusHeightFtInput: false,
+      focusHeightInInput: true
+    })
+  }
+
+  handleHeightInInputSubmit = () => {
+    this.clearInputFocus()
   }
 
   runAllCalcs () {
@@ -346,7 +408,9 @@ class SummaryScreen extends Component {
           </View>
           <Text style={styles.LabelBar}>                   Age                                                     Weight</Text>
           <View style={styles.container}>
-            <TextInput
+            <FocusableTextInput
+              returnKeyType={"next"}
+              onSubmitEditing={this.handleAgeInputSubmit}
               placeholder='years'
               underlineColorAndroid='transparent'
               keyboardType='numeric'
@@ -356,7 +420,9 @@ class SummaryScreen extends Component {
                 this.runAllCalcs()
               }}
               value={this.state.text} />
-            <TextInput
+            <FocusableTextInput
+              focus={this.state.focusWeightInput}
+              onSubmitEditing={this.handleWeightInputSubmit}
               placeholder='lbs'
               underlineColorAndroid='transparent'
               keyboardType='numeric'
@@ -369,7 +435,9 @@ class SummaryScreen extends Component {
           </View>
           <Text style={styles.LabelBar}>                   Height</Text>
           <View style={styles.container}>
-            <TextInput
+            <FocusableTextInput
+              focus={this.state.focusHeightFtInput}
+              onSubmitEditing={this.handleHeightFtInputSubmit}
               placeholder='ft'
               underlineColorAndroid='transparent'
               keyboardType='numeric'
@@ -379,7 +447,9 @@ class SummaryScreen extends Component {
                 this.runAllCalcs()
               }}
               value={this.state.text} />
-            <TextInput
+            <FocusableTextInput
+              focus={this.state.focusHeightInInput}
+              onSubmitEditing={this.handleHeightInInputSubmit}
               placeholder='in'
               underlineColorAndroid='transparent'
               keyboardType='numeric'
@@ -392,7 +462,10 @@ class SummaryScreen extends Component {
           </View>
           <Text style={styles.LabelBar}>                   Gender</Text>
           <View style={{flex: 1, flexDirection: 'row', justifyContent: 'center', alignSelf: 'center', alignItems: 'center', height: 114, width: undefined}}>
-            <TouchableOpacity onPress={this.onPressFemale}>
+            <TouchableOpacity onPress={() => {
+              this.clearInputFocus()
+              this.onPressFemale()
+            }}>
               <View style={{borderBottomWidth: 4, borderColor: this.state.gender === 'female' ? 'gray' : 'rgba(0, 0, 0, 0)'}}>
                 <View style={{padding: 5}}>
                   <Image
@@ -402,7 +475,10 @@ class SummaryScreen extends Component {
                 </View>
               </View>
             </TouchableOpacity>
-            <TouchableOpacity onPress={this.onPressMale}>
+            <TouchableOpacity onPress={() => {
+              this.clearInputFocus()
+              this.onPressMale()
+            }}>
               <View style={{borderBottomWidth: 4, borderColor: this.state.gender === 'male' ? 'gray' : 'rgba(0, 0, 0, 0)'}}>
                 <View style={{padding: 5}}>
                   <Image
