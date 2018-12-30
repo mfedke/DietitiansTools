@@ -400,7 +400,7 @@ class SummaryScreen extends Component {
     }
 
     return (
-      <ScrollView>
+      <ScrollView style={styles.ScrollContent}>
         { /* this is an inline JSX comment */ }
         <View>
           <View style={styles.TopMessage}>
@@ -470,7 +470,7 @@ class SummaryScreen extends Component {
                 <View style={{padding: 5}}>
                   <Image
                     source={require('../../App/Images/female45x100.png')}
-                    style={{width: 40, height: 100}}
+                    style={{width: 45, height: 100}}
                   />
                 </View>
               </View>
@@ -483,7 +483,7 @@ class SummaryScreen extends Component {
                 <View style={{padding: 5}}>
                   <Image
                     source={require('../../App/Images/male45x100.png')}
-                    style={{width: 40, height: 100}}
+                    style={{width: 45, height: 100}}
                   />
                 </View>
               </View>

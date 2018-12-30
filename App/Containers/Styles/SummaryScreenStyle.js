@@ -50,5 +50,8 @@ export default StyleSheet.create({
     backgroundColor: Colors.labelbar,
     height: 30,
     paddingTop: 5
+  },
+  ScrollContent: {
+    backgroundColor: '#F6F3E7'
   }
 })
