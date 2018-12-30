@@ -469,7 +469,7 @@ class SummaryScreen extends Component {
               <View style={{borderBottomWidth: 4, borderColor: this.state.gender === 'female' ? 'gray' : 'rgba(0, 0, 0, 0)'}}>
                 <View style={{padding: 5}}>
                   <Image
-                    source={require('../../App/Images/female45x100.png')}
+                    source={this.state.gender === 'female' ? require('../../App/Images/female45x100-dark.png') : require('../../App/Images/female45x100.png')}
                     style={{width: 45, height: 100}}
                   />
                 </View>
@@ -482,7 +482,7 @@ class SummaryScreen extends Component {
               <View style={{borderBottomWidth: 4, borderColor: this.state.gender === 'male' ? 'gray' : 'rgba(0, 0, 0, 0)'}}>
                 <View style={{padding: 5}}>
                   <Image
-                    source={require('../../App/Images/male45x100.png')}
+                    source={this.state.gender === 'male' ? require('../../App/Images/male45x100-dark.png') : require('../../App/Images/male45x100.png')}
                     style={{width: 45, height: 100}}
                   />
                 </View>
