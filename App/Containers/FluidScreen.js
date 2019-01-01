@@ -67,7 +67,7 @@ class FluidScreen extends Component {
             updateMlkgFactors={this.updateMlkgFactors}
           />
           <View style={{flex: 1, flexDirection: 'row', justifyContent: 'center', alignSelf: 'center', alignItems: 'center', borderWidth: 1, height: 30, width: '80%'}}>
-            <Text>Fluid: {this.state.fluid_min.toFixed(1)} - {this.state.fluid_max.toFixed(1)}</Text>
+            <Text>Fluid: {this.state.fluid_min === this.state.fluid_max ? this.state.fluid_min.toFixed(1) : this.state.fluid_min.toFixed(1) + ' - ' + this.state.fluid_max.toFixed(1)}</Text>
           </View>
         </View>
       </ScrollView>

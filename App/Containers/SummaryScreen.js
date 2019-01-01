@@ -392,10 +392,10 @@ class SummaryScreen extends Component {
 
   render () {
     var calculatedValStrings = {
-      'Kcal': this.state.kcal_min.toFixed(1) + ' - ' + this.state.kcal_max.toFixed(1),
-      'Protein': this.state.protein_min.toFixed(1) + ' - ' + this.state.protein_max.toFixed(1),
-      'Fluid': this.state.fluid_min.toFixed(1) + ' - ' + this.state.fluid_max.toFixed(1),
-      'Ibw': this.state.ibw_min.toFixed(1) + ' - ' + this.state.ibw_max.toFixed(1),
+      'Kcal': this.state.kcal_min === this.state.kcal_max ? this.state.kcal_min.toFixed(1) : this.state.kcal_min.toFixed(1) + ' - ' + this.state.kcal_max.toFixed(1),
+      'Protein': this.state.protein_min === this.state.protein_max ? this.state.protein_min.toFixed(1) : this.state.protein_min.toFixed(1) + ' - ' + this.state.protein_max.toFixed(1),
+      'Fluid': this.state.fluid_min === this.state.fluid_max ? this.state.fluid_min.toFixed(1) : this.state.fluid_min.toFixed(1) + ' - ' + this.state.fluid_max.toFixed(1),
+      'Ibw': this.state.ibw_min === this.state.ibw_max ? this.state.ibw_min.toFixed(1) : this.state.ibw_min.toFixed(1) + ' - ' + this.state.ibw_max.toFixed(1),
       'Bmi': this.state.bmi.toFixed(1)
     }
 
@@ -409,7 +409,7 @@ class SummaryScreen extends Component {
           <Text style={styles.LabelBar}>                   Age                                                     Weight</Text>
           <View style={styles.container}>
             <FocusableTextInput
-              returnKeyType={"next"}
+              returnKeyType={'next'}
               onSubmitEditing={this.handleAgeInputSubmit}
               placeholder='years'
               underlineColorAndroid='transparent'

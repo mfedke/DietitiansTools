@@ -33,7 +33,7 @@ class ProteinScreen extends Component {
             this.notifySummaryPage(newSelectedVal)
           }} />
           <View style={{flex: 1, flexDirection: 'row', justifyContent: 'center', alignSelf: 'center', alignItems: 'center', borderWidth: 1, height: 30, width: '80%'}}>
-            <Text>Protein: {this.state.protein_min.toFixed(1)} - {this.state.protein_max.toFixed(1)}</Text>
+            <Text>Protein: {this.state.protein_min === this.state.protein_max ? this.state.protein_min.toFixed(1) : this.state.protein_min.toFixed(1) + ' - ' + this.state.protein_max.toFixed(1)}</Text>
           </View>
         </View>
       </ScrollView>

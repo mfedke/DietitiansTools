@@ -72,7 +72,7 @@ class IbwScreen extends Component {
             }}
           />
           <View style={{flex: 1, flexDirection: 'row', justifyContent: 'center', alignSelf: 'center', alignItems: 'center', borderWidth: 1, height: 30, width: '80%'}}>
-            <Text>IBW: {this.state.ibw_min.toFixed(1)} - {this.state.ibw_max.toFixed(1)}</Text>
+            <Text>IBW: {this.state.ibw_min === this.state.ibw_max ? this.state.ibw_min.toFixed(1) : this.state.ibw_min.toFixed(1) + ' - ' + this.state.ibw_max.toFixed(1)}</Text>
           </View>
         </View>
       </ScrollView>

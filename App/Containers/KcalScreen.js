@@ -141,7 +141,7 @@ class KcalScreen extends Component {
             updateKcalKg={this.updateKcalKg}
           />
           <View style={{flex: 1, flexDirection: 'row', justifyContent: 'center', alignSelf: 'center', alignItems: 'center', borderWidth: 1, height: 30, width: '80%'}}>
-            <Text>Kcal: {this.state.kcal_min.toFixed(1)} - {this.state.kcal_max.toFixed(1)}</Text>
+            <Text>Kcal: {this.state.kcal_min === this.state.kcal_max ? this.state.kcal_min.toFixed(1) : this.state.kcal_min.toFixed(1) + ' - ' + this.state.kcal_max.toFixed(1)}</Text>
           </View>
         </View>
       </ScrollView>
