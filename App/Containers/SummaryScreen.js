@@ -177,7 +177,8 @@ class SummaryScreen extends Component {
 
     this.BmiState = {
       ampVal: 1.0,
-      bmi: 0.0
+      bmi: 0.0,
+      classification: 'Normal'
     }
   }
 
@@ -376,6 +377,17 @@ class SummaryScreen extends Component {
   calcBmi () {
     var heightIn = this.state.height_ft * 12.0 + this.state.height_in
     this.BmiState.bmi = 703.0 * (this.state.weight_lbs / (heightIn * heightIn)) * this.BmiState.ampVal
+    if (this.BmiState.bmi < 25.0) {
+      this.BmiState.classification = 'Normal'
+    } else if (this.BmiState.bmi >= 25.0 && this.BmiState.bmi < 30.0) {
+      this.BmiState.classification = 'Overweight'
+    } else if (this.BmiState.bmi >= 30.0 && this.BmiState.bmi < 35.0) {
+      this.BmiState.classification = 'Obesity I'
+    } else if (this.BmiState.bmi >= 35.0 && this.BmiState.bmi < 40.0) {
+      this.BmiState.classification = 'Obesity II'
+    } else if (this.BmiState.bmi >= 40.0) {
+      this.BmiState.classification = 'Extreme Obesity III'
+    }
   }
 
   onPressFemale = () => {

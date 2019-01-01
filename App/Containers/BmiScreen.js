@@ -50,7 +50,7 @@ class BmiScreen extends Component {
             <Picker.Item label='Both Entire Legs - 32%' value={1.0 - 0.32} />
           </Picker>
           <View style={{flex: 1, flexDirection: 'row', justifyContent: 'center', alignSelf: 'center', alignItems: 'center', borderWidth: 1, height: 30, width: '80%'}}>
-            <Text>BMI: {this.state.bmi.toFixed(1)}</Text>
+            <Text>BMI: {this.state.bmi.toFixed(1) + ' - ' + this.state.classification}</Text>
           </View>
           <View style={{flex: 1, flexDirection: 'row', justifyContent: 'center', alignSelf: 'center', height: 30, width: '80%'}} />
           <View style={{flex: 1, flexDirection: 'row', justifyContent: 'center', alignSelf: 'center', borderWidth: 1, height: 30, width: '80%'}}>
