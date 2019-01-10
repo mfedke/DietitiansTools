@@ -35,6 +35,59 @@ class FocusableTextInput extends TextInput {
   }
 }
 
+class ChildSummary extends React.Component {
+  render () {
+    const {name, KcalState, ProteinState, FluidState, IbwState, BmiState, style} = this.props
+    var summary = ''
+
+    if (name === 'Kcal') {
+      if (KcalState.formulaData[KcalState.selectedFormulaIndex].label === 'Mifflin St. Jeor') {
+        summary = 'Formula: Mifflin; activity: ' + KcalState.mifflinActivityData[KcalState.selectedMifflinActivityIndex].label
+      }
+      if (KcalState.formulaData[KcalState.selectedFormulaIndex].label === 'Harris-Benedict') {
+        summary = 'Formula: Harris-Benedict; activity: ' + KcalState.hbActivityData[KcalState.selectedHBActivityIndex].label + '; stress: ' + KcalState.hbStressData[KcalState.selectedHBStressIndex].label
+      }
+      if (KcalState.formulaData[KcalState.selectedFormulaIndex].label === 'Kcal/Kg') {
+        summary = 'Formula: Kcal/Kg: ' + KcalState.kcalkgData[KcalState.selectedKcalkgIndex].LL + ' - ' + KcalState.kcalkgData[KcalState.selectedKcalkgIndex].UL + ' ' + KcalState.kcalkgData[KcalState.selectedKcalkgIndex].label
+      }
+    }
+
+    if (name === 'Protein') {
+      let selectedProtein = ProteinState.data.find(e => e.selected === true)
+      summary = selectedProtein ? selectedProtein.label : ''
+    }
+
+    if (name === 'Fluid') {
+      if (FluidState.formulaData[FluidState.selectedFormulaIndex].label === 'ml/kg') {
+        summary = 'Formula: ml/kg: ' + FluidState.mlkgData[FluidState.selectedMlkgIndex].LL + ' - ' + FluidState.mlkgData[FluidState.selectedMlkgIndex].UL + ' ' + FluidState.mlkgData[FluidState.selectedMlkgIndex].label
+      }
+      if (FluidState.formulaData[FluidState.selectedFormulaIndex].label === '1 ml/kcal') {
+        summary = 'Formula: 1 ml/kcal'
+      }
+      if (FluidState.formulaData[FluidState.selectedFormulaIndex].label === 'Holliday-Seger Method') {
+        summary = 'Formula: Holliday-Seger'
+      }
+    }
+
+    if (name === 'Ibw') {
+      let selectedAmp = IbwState.ampData.find(e => e.index === IbwState.selectedAmpIndex)
+      let selectedPlegia = IbwState.plegiaData.find(e => e.value === IbwState.plegiaVal)
+      if (selectedPlegia) {
+        summary = 'Amputation: ' + selectedAmp.label + '; Plegia: ' + selectedPlegia.label
+      } else {
+        summary = 'Amputation: ' + selectedAmp.label + '; Plegia: None'
+      }
+    }
+
+    if (name === 'Bmi') {
+      let selectedAmp = BmiState.ampData.find(e => e.index === BmiState.selectedAmpIndex)
+      summary = 'Amputation: ' + selectedAmp.label + '; Classification: ' + BmiState.classification
+    }
+
+    return (<View style={style}><Text style={{fontSize: 10}}>{summary}</Text></View>)
+  }
+}
+
 class SummaryScreen extends Component {
   constructor (props) {
     super(props)
@@ -121,9 +174,145 @@ class SummaryScreen extends Component {
 
     /* Store sub page state here in Summary Page so it can be maintained while navigating around */
     this.KcalState = {
-      formula: 'mifflin',
-      factors: {'mifflin': {'activity': 1.2}, 'hb': {'activity': 1.0, 'stress': 'No stress - LL: 1.0, UL: 1.0'}},
-      KcalKg: 'LL: 18.0, UL: 22.0',
+      formulaData: [
+        {
+          label: 'Mifflin St. Jeor'
+        },
+        {
+          label: 'Harris-Benedict'
+        },
+        {
+          label: 'Kcal/Kg'
+        }
+      ],
+      mifflinActivityData: [
+        {
+          label: 'sedentary',
+          value: 1.2
+        },
+        {
+          label: 'lightly active',
+          value: 1.375
+        },
+        {
+          label: 'moderately active',
+          value: 1.55
+        },
+        {
+          label: 'very active',
+          value: 1.725
+        },
+        {
+          label: 'extra active',
+          value: 1.9
+        }
+      ],
+      hbActivityData: [
+        {
+          label: 'comatose, motionless',
+          value: 1.0
+        },
+        {
+          label: 'in bed, bed to chair',
+          value: 1.2
+        },
+        {
+          label: 'hospitalized ambulatory',
+          value: 1.3
+        },
+        {
+          label: 'regular exercise',
+          value: 1.5
+        },
+        {
+          label: 'strenuous activity',
+          value: 1.8
+        }
+      ],
+      hbStressData: [
+        {
+          label: 'No stress',
+          UL: 1.0,
+          LL: 1.0
+        },
+        {
+          label: 'Minor Surgery',
+          UL: 1.2,
+          LL: 1.0
+        },
+        {
+          label: 'Major Surgery',
+          UL: 1.3,
+          LL: 1.1
+        },
+        {
+          label: 'Skeletal Trauma',
+          UL: 1.6,
+          LL: 1.1
+        },
+        {
+          label: 'Head Trauma',
+          UL: 1.8,
+          LL: 1.6
+        },
+        {
+          label: 'Mild Infection',
+          UL: 1.2,
+          LL: 1.0
+        },
+        {
+          label: 'Moderate Infection',
+          UL: 1.4,
+          LL: 1.2
+        },
+        {
+          label: 'Severe Infection',
+          UL: 1.8,
+          LL: 1.4
+        },
+        {
+          label: '<20% BSA Burn',
+          UL: 1.5,
+          LL: 1.2
+        },
+        {
+          label: '20% - 40% BSA Burn',
+          UL: 1.8,
+          LL: 1.5
+        },
+        {
+          label: '>40% BSA Burn',
+          UL: 2.0,
+          LL: 1.8
+        }
+      ],
+      kcalkgData: [
+        {
+          label: 'Kcal/Kg',
+          UL: 22,
+          LL: 18
+        },
+        {
+          label: 'Kcal/Kg',
+          UL: 30,
+          LL: 25
+        },
+        {
+          label: 'Kcal/Kg',
+          UL: 35,
+          LL: 30
+        },
+        {
+          label: 'Kcal/Kg',
+          UL: 40,
+          LL: 35
+        }
+      ],
+      selectedFormulaIndex: 0,
+      selectedMifflinActivityIndex: 0,
+      selectedHBActivityIndex: 0,
+      selectedHBStressIndex: 0,
+      selectedKcalkgIndex: 0,
       kcal_min: 0.0,
       kcal_max: 0.0
     }
@@ -162,21 +351,129 @@ class SummaryScreen extends Component {
     }
 
     this.FluidState = {
-      formula: 'mlkg',
-      mlkgFactors: 'LL: 25.0, UL: 30.0',
+      formulaData: [
+        {
+          label: 'ml/kg'
+        },
+        {
+          label: '1 ml/kcal'
+        },
+        {
+          label: 'Holliday-Seger Method'
+        }
+      ],
+      mlkgData: [
+        {
+          label: 'ml/kg',
+          UL: 30,
+          LL: 25
+        },
+        {
+          label: 'ml/kg',
+          UL: 35,
+          LL: 30
+        }
+      ],
+      selectedFormulaIndex: 0,
+      selectedMlkgIndex: 0,
       fluid_min: 0.0,
       fluid_max: 0.0
     }
 
+    this.ampData = [
+      {
+        label: 'No Amputation',
+        value: 1.0,
+        index: 0
+      },
+      {
+        label: 'Below Knee - 5.9%',
+        value: 1.0 - 0.059,
+        index: 1
+      },
+      {
+        label: 'Above Knee - 10%',
+        value: 1.0 - 0.1,
+        index: 2
+      },
+      {
+        label: 'Bilateral BKA - 11.8%',
+        value: 1.0 - 0.118,
+        index: 3
+      },
+      {
+        label: 'Bilateral AKA - 20%',
+        value: 1.0 - 0.2,
+        index: 4
+      },
+      {
+        label: 'BKA + AKA - 16%',
+        value: 1.0 - 0.16,
+        index: 5
+      },
+      {
+        label: 'Foot - 1.5%',
+        value: 1.0 - 0.015,
+        index: 6
+      },
+      {
+        label: 'Both Feet - 3%',
+        value: 1.0 - 0.03,
+        index: 7
+      },
+      {
+        label: 'Forearm and Hand - 2.3%',
+        value: 1.0 - 0.023,
+        index: 8
+      },
+      {
+        label: 'Both Forearms and Hands - 4.6%',
+        value: 1.0 - 0.046,
+        index: 9
+      },
+      {
+        label: 'Entire Arm - 5%',
+        value: 1.0 - 0.05,
+        index: 10
+      },
+      {
+        label: 'Both Entire Arms - 10%',
+        value: 1.0 - 0.1,
+        index: 11
+      },
+      {
+        label: 'Entire Leg - 16%',
+        value: 1.0 - 0.16,
+        index: 12
+      },
+      {
+        label: 'Both Entire Legs - 32%',
+        value: 1.0 - 0.32,
+        index: 13
+      }
+    ]
+
     this.IbwState = {
+      ampData: this.ampData,
+      plegiaData: [
+        {
+          label: 'Paraplegia',
+          value: 10
+        },
+        {
+          label: 'Quadraplegia',
+          value: 15
+        }
+      ],
       plegiaVal: 0,
-      ampVal: 1.0,
+      selectedAmpIndex: 0,
       ibw_min: 0.0,
       ibw_max: 0.0
     }
 
     this.BmiState = {
-      ampVal: 1.0,
+      ampData: this.ampData,
+      selectedAmpIndex: 0,
       bmi: 0.0,
       classification: 'Normal'
     }
@@ -262,9 +559,8 @@ class SummaryScreen extends Component {
     var bmrBase = 0
     var bmr = 0
     var heightIn = this.state.height_ft * 12.0 + this.state.height_in
-    var LLULRegex = /LL: ([0-9\.]+), UL: ([0-9\.]+)/
 
-    if (this.KcalState.formula === 'mifflin') {
+    if (this.KcalState.formulaData[this.KcalState.selectedFormulaIndex].label === 'Mifflin St. Jeor') {
       if (this.state.gender === 'male') {
         // Male: BMR = 10 * weight + 6.25 * height - 5 * age + 5
         bmrBase = 10.0 * this.convertLbsToKg(this.state.weight_lbs) +
@@ -278,9 +574,9 @@ class SummaryScreen extends Component {
                   5.0 * parseFloat(this.state.age) -
                   161
       }
-      var bmrBoth = bmrBase * this.KcalState.factors['mifflin']['activity']
+      var bmrBoth = bmrBase * this.KcalState.mifflinActivityData[this.KcalState.selectedMifflinActivityIndex].value
       bmr = {'LL': bmrBoth, 'UL': bmrBoth}
-    } else if (this.KcalState.formula === 'hb') {
+    } else if (this.KcalState.formulaData[this.KcalState.selectedFormulaIndex].label === 'Harris-Benedict') {
       if (this.state.gender === 'male') {
         // Male: RMR = 13.75 * weight + 5 * height - 6.75 * age + 66.47
         bmrBase = 13.75 * this.convertLbsToKg(this.state.weight_lbs) +
@@ -294,16 +590,16 @@ class SummaryScreen extends Component {
                   4.67 * parseFloat(this.state.age) +
                   655.09
       }
-      let stressMatch = LLULRegex.exec(this.KcalState.factors['hb']['stress'])
-      let stressLL = parseFloat(stressMatch[1])
-      let stressUL = parseFloat(stressMatch[2])
-      bmr = {'LL': bmrBase * this.KcalState.factors['hb']['activity'] * stressLL, 'UL': bmrBase * this.KcalState.factors['hb']['activity'] * stressUL}
-    } else if (this.KcalState.formula === 'kcalkg') {
-      let kcalkgMatch = LLULRegex.exec(this.KcalState.KcalKg)
-      let kcalkgLL = parseFloat(kcalkgMatch[1])
-      let kcalkgUL = parseFloat(kcalkgMatch[2])
+      bmr = {
+        'LL': bmrBase * this.KcalState.hbActivityData[this.KcalState.selectedHBActivityIndex].value * this.KcalState.hbStressData[this.KcalState.selectedHBStressIndex].LL,
+        'UL': bmrBase * this.KcalState.hbActivityData[this.KcalState.selectedHBActivityIndex].value * this.KcalState.hbStressData[this.KcalState.selectedHBStressIndex].UL
+      }
+    } else if (this.KcalState.formulaData[this.KcalState.selectedFormulaIndex].label === 'Kcal/Kg') {
       let weightKg = this.convertLbsToKg(this.state.weight_lbs)
-      bmr = {'LL': kcalkgLL * weightKg, 'UL': kcalkgUL * weightKg}
+      bmr = {
+        'LL': this.KcalState.kcalkgData[this.KcalState.selectedKcalkgIndex].LL * weightKg,
+        'UL': this.KcalState.kcalkgData[this.KcalState.selectedKcalkgIndex].UL * weightKg
+      }
     }
     this.KcalState.kcal_min = bmr['LL']
     this.KcalState.kcal_max = bmr['UL']
@@ -319,17 +615,16 @@ class SummaryScreen extends Component {
 
   calcFluid () {
     var fluid = 0
-    var LLULRegex = /LL: ([0-9\.]+), UL: ([0-9\.]+)/
 
-    if (this.FluidState.formula === 'mlkg') {
-      let mlkgMatch = LLULRegex.exec(this.FluidState.mlkgFactors)
-      let mlkgLL = parseFloat(mlkgMatch[1])
-      let mlkgUL = parseFloat(mlkgMatch[2])
+    if (this.FluidState.formulaData[this.FluidState.selectedFormulaIndex].label === 'ml/kg') {
       let weightKg = this.convertLbsToKg(this.state.weight_lbs)
-      fluid = {'LL': mlkgLL * weightKg, 'UL': mlkgUL * weightKg}
-    } else if (this.FluidState.formula === 'mlkcal') {
+      fluid = {
+        'LL': this.FluidState.mlkgData[this.FluidState.selectedMlkgIndex].LL * weightKg,
+        'UL': this.FluidState.mlkgData[this.FluidState.selectedMlkgIndex].UL * weightKg
+      }
+    } else if (this.FluidState.formulaData[this.FluidState.selectedFormulaIndex].label === '1 ml/kcal') {
       fluid = {'LL': this.state.kcal_min, 'UL': this.state.kcal_max}
-    } else if (this.FluidState.formula === 'hs') {
+    } else if (this.FluidState.formulaData[this.FluidState.selectedFormulaIndex].label === 'Holliday-Seger Method') {
       let weightKg = this.convertLbsToKg(this.state.weight_lbs)
       let fluidBase = 0.0
       if (weightKg <= 10) {
@@ -354,8 +649,6 @@ class SummaryScreen extends Component {
     var ibwBase = 0.0
     var heightIn = this.state.height_ft * 12.0 + this.state.height_in
 
-    console.log('in calcIbw, gender: ' + this.state.gender)
-
     if (this.state.gender === 'male') {
       if (heightIn <= 60) {
         ibwBase = 106 - (60 - heightIn) * 2.5
@@ -370,13 +663,16 @@ class SummaryScreen extends Component {
       }
     }
 
-    this.IbwState.ibw_min = (ibwBase * 0.9 - this.IbwState.plegiaVal) * this.IbwState.ampVal
-    this.IbwState.ibw_max = (ibwBase * 1.1 - this.IbwState.plegiaVal) * this.IbwState.ampVal
+    let selectedAmp = this.IbwState.ampData.find(e => e.index === this.IbwState.selectedAmpIndex)
+
+    this.IbwState.ibw_min = (ibwBase * 0.9 - this.IbwState.plegiaVal) * selectedAmp.value
+    this.IbwState.ibw_max = (ibwBase * 1.1 - this.IbwState.plegiaVal) * selectedAmp.value
   }
 
   calcBmi () {
     var heightIn = this.state.height_ft * 12.0 + this.state.height_in
-    this.BmiState.bmi = 703.0 * (this.state.weight_lbs / (heightIn * heightIn)) * this.BmiState.ampVal
+    let selectedAmp = this.BmiState.ampData.find(e => e.index === this.BmiState.selectedAmpIndex)
+    this.BmiState.bmi = 703.0 * (this.state.weight_lbs / (heightIn * heightIn)) * selectedAmp.value
     if (this.BmiState.bmi < 25.0) {
       this.BmiState.classification = 'Normal'
     } else if (this.BmiState.bmi >= 25.0 && this.BmiState.bmi < 30.0) {
@@ -509,6 +805,14 @@ class SummaryScreen extends Component {
                   onPress={() => this.props.navigation.navigate(name.concat('Screen'), this.state)}>
                   {name}
                 </RoundedButton>
+                <ChildSummary
+                  name={name}
+                  KcalState={this.KcalState}
+                  ProteinState={this.ProteinState}
+                  FluidState={this.FluidState}
+                  IbwState={this.IbwState}
+                  BmiState={this.BmiState}
+                  style={{paddingLeft: '10%', paddingBottom: '10%'}} />
               </View>
               <View key={i + 30} style={{flexBasis: '40%'}}>
                 <View key={i + 40} style={{padding: '10%'}}>
