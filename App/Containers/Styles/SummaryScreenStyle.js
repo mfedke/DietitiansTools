@@ -4,11 +4,13 @@ import { Colors, Metrics } from '../../Themes/'
 export default StyleSheet.create({
   container: {
     // flex: 0,
+    flex: 1,
     flexDirection: 'row',
     // justifyContent: 'space-between',
     justifyContent: 'space-around',
     // marginTop: Metrics.navBarHeight,
-    backgroundColor: Colors.transparent
+    alignItems: 'center',
+    backgroundColor: 'white'
   },
 //  MainContainer :{
 //    // Setting up View inside content in Vertically center.
@@ -32,24 +34,31 @@ export default StyleSheet.create({
     textAlign: 'left',
     // Setting up TextInput height as 50 pixel.
     height: 40,
-    width: 100,
+    width: 75,
     // Set border width.
     borderWidth: 0,
     // Set border Hex Color Code Here.
-    // borderColor: '#FF5722',
+    borderColor: 'gray',
     // Set border Radius.
     borderRadius: 5,
     // Set background color of Text Input.
-    backgroundColor: 'white',
-    marginTop: 5,
-    marginBottom: 5,
-    marginLeft: 10
+    backgroundColor: '#e8e8e8',
+    //marginTop: 5,
+    //marginBottom: 5,
+    //marginLeft: 10
+    margin: '2%'
   },
   LabelBar: {
-    color: 'white',
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-around',
     backgroundColor: Colors.labelbar,
     height: 30,
     paddingTop: 5
+  },
+  LabelBarText: {
+    color: 'white',
+    alignItems: 'center'
   },
   ScrollContent: {
     backgroundColor: '#F6F3E7'

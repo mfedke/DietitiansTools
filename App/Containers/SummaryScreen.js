@@ -3,6 +3,7 @@ import { View, Text, TextInput, Image, ScrollView, TouchableOpacity, Button } fr
 import { connect } from 'react-redux'
 import RoundedButton from '../Components/RoundedButton'
 import PropTypes from 'prop-types'
+import { Colors } from '../Themes/'
 // Add Actions - replace 'Your' with whatever your reducer is called :)
 // import YourActions from '../Redux/YourRedux'
 
@@ -42,13 +43,13 @@ class ChildSummary extends React.Component {
 
     if (name === 'Kcal') {
       if (KcalState.formulaData[KcalState.selectedFormulaIndex].label === 'Mifflin St. Jeor') {
-        summary = 'Formula: Mifflin; activity: ' + KcalState.mifflinActivityData[KcalState.selectedMifflinActivityIndex].label
+        summary = 'Mifflin St. Jeor; ' + KcalState.mifflinActivityData[KcalState.selectedMifflinActivityIndex].label
       }
       if (KcalState.formulaData[KcalState.selectedFormulaIndex].label === 'Harris-Benedict') {
-        summary = 'Formula: Harris-Benedict; activity: ' + KcalState.hbActivityData[KcalState.selectedHBActivityIndex].label + '; stress: ' + KcalState.hbStressData[KcalState.selectedHBStressIndex].label
+        summary = 'Harris-Benedict; ' + KcalState.hbActivityData[KcalState.selectedHBActivityIndex].label + '; ' + KcalState.hbStressData[KcalState.selectedHBStressIndex].label
       }
       if (KcalState.formulaData[KcalState.selectedFormulaIndex].label === 'Kcal/Kg') {
-        summary = 'Formula: Kcal/Kg: ' + KcalState.kcalkgData[KcalState.selectedKcalkgIndex].LL + ' - ' + KcalState.kcalkgData[KcalState.selectedKcalkgIndex].UL + ' ' + KcalState.kcalkgData[KcalState.selectedKcalkgIndex].label
+        summary = 'Kcal/Kg; ' + KcalState.kcalkgData[KcalState.selectedKcalkgIndex].LL + ' - ' + KcalState.kcalkgData[KcalState.selectedKcalkgIndex].UL + ' ' + KcalState.kcalkgData[KcalState.selectedKcalkgIndex].label
       }
     }
 
@@ -59,13 +60,13 @@ class ChildSummary extends React.Component {
 
     if (name === 'Fluid') {
       if (FluidState.formulaData[FluidState.selectedFormulaIndex].label === 'ml/kg') {
-        summary = 'Formula: ml/kg: ' + FluidState.mlkgData[FluidState.selectedMlkgIndex].LL + ' - ' + FluidState.mlkgData[FluidState.selectedMlkgIndex].UL + ' ' + FluidState.mlkgData[FluidState.selectedMlkgIndex].label
+        summary = 'ml/kg; ' + FluidState.mlkgData[FluidState.selectedMlkgIndex].LL + ' - ' + FluidState.mlkgData[FluidState.selectedMlkgIndex].UL + ' ' + FluidState.mlkgData[FluidState.selectedMlkgIndex].label
       }
       if (FluidState.formulaData[FluidState.selectedFormulaIndex].label === '1 ml/kcal') {
-        summary = 'Formula: 1 ml/kcal'
+        summary = '1 ml/kcal'
       }
       if (FluidState.formulaData[FluidState.selectedFormulaIndex].label === 'Holliday-Seger Method') {
-        summary = 'Formula: Holliday-Seger'
+        summary = 'Holliday-Seger'
       }
     }
 
@@ -73,18 +74,18 @@ class ChildSummary extends React.Component {
       let selectedAmp = IbwState.ampData.find(e => e.index === IbwState.selectedAmpIndex)
       let selectedPlegia = IbwState.plegiaData.find(e => e.value === IbwState.plegiaVal)
       if (selectedPlegia) {
-        summary = 'Amputation: ' + selectedAmp.label + '; Plegia: ' + selectedPlegia.label
+        summary = selectedAmp.label + '; ' + selectedPlegia.label
       } else {
-        summary = 'Amputation: ' + selectedAmp.label + '; Plegia: None'
+        summary = selectedAmp.label + '; No plegia'
       }
     }
 
     if (name === 'Bmi') {
       let selectedAmp = BmiState.ampData.find(e => e.index === BmiState.selectedAmpIndex)
-      summary = 'Amputation: ' + selectedAmp.label + '; Classification: ' + BmiState.classification
+      summary = selectedAmp.label + '; ' + BmiState.classification
     }
 
-    return (<View style={style}><Text style={{fontSize: 10}}>{summary}</Text></View>)
+    return (<View style={style}><Text style={{fontSize: 10, color: '#353535'}}>{summary}</Text></View>)
   }
 }
 
@@ -333,7 +334,7 @@ class SummaryScreen extends Component {
           value: 'LL: 1.0, UL: 1.0'
         },
         {
-          label: 'CKD w/ Dialysis 1.2 - 1.5 gm/kg',
+          label: 'CKD w/ Dialysis: 1.2 - 1.5 gm/kg',
           value: 'LL: 1.2, UL: 1.5'
         },
         {
@@ -711,118 +712,159 @@ class SummaryScreen extends Component {
       <ScrollView style={styles.ScrollContent}>
         { /* this is an inline JSX comment */ }
         <View>
-          <View style={styles.TopMessage}>
-            <Text style={styles.BareTextBold}>Enter the following data:</Text>
-          </View>
-          <Text style={styles.LabelBar}>                   Age                                                     Weight</Text>
-          <View style={styles.container}>
-            <FocusableTextInput
-              returnKeyType={'next'}
-              onSubmitEditing={this.handleAgeInputSubmit}
-              placeholder='years'
-              underlineColorAndroid='transparent'
-              keyboardType='numeric'
-              style={styles.TextInput}
-              onChangeText={(text) => {
-                this.state.age = parseFloat(text)
-                this.runAllCalcs()
-              }}
-              value={this.state.text} />
-            <FocusableTextInput
-              focus={this.state.focusWeightInput}
-              onSubmitEditing={this.handleWeightInputSubmit}
-              placeholder='lbs'
-              underlineColorAndroid='transparent'
-              keyboardType='numeric'
-              style={styles.TextInput}
-              onChangeText={(text) => {
-                this.state.weight_lbs = parseFloat(text)
-                this.runAllCalcs()
-              }}
-              value={this.state.text} />
-          </View>
-          <Text style={styles.LabelBar}>                   Height</Text>
-          <View style={styles.container}>
-            <FocusableTextInput
-              focus={this.state.focusHeightFtInput}
-              onSubmitEditing={this.handleHeightFtInputSubmit}
-              placeholder='ft'
-              underlineColorAndroid='transparent'
-              keyboardType='numeric'
-              style={styles.TextInput}
-              onChangeText={(text) => {
-                this.state.height_ft = parseFloat(text)
-                this.runAllCalcs()
-              }}
-              value={this.state.text} />
-            <FocusableTextInput
-              focus={this.state.focusHeightInInput}
-              onSubmitEditing={this.handleHeightInInputSubmit}
-              placeholder='in'
-              underlineColorAndroid='transparent'
-              keyboardType='numeric'
-              style={styles.TextInput}
-              onChangeText={(text) => {
-                this.state.height_in = parseFloat(text)
-                this.runAllCalcs()
-              }}
-              value={this.state.text} />
-          </View>
-          <Text style={styles.LabelBar}>                   Gender</Text>
-          <View style={{flex: 1, flexDirection: 'row', justifyContent: 'center', alignSelf: 'center', alignItems: 'center', height: 114, width: undefined}}>
-            <TouchableOpacity onPress={() => {
-              this.clearInputFocus()
-              this.onPressFemale()
-            }}>
-              <View style={{borderBottomWidth: 4, borderColor: this.state.gender === 'female' ? 'gray' : 'rgba(0, 0, 0, 0)'}}>
-                <View style={{padding: 5}}>
-                  <Image
-                    source={this.state.gender === 'female' ? require('../../App/Images/female45x100-dark.png') : require('../../App/Images/female45x100.png')}
-                    style={{width: 45, height: 100}}
-                  />
-                </View>
+          <View style={{borderWidth: 0, borderColor: 'blue', flex: 1, flexDirection: 'row', justifyContent: 'space-around', alignItems: 'flex-start', paddingTop: '4%', backgroundColor: 'white'}}>
+            <View style={{borderWidth: 1, borderColor: '#86cacb', borderRadius: 10, flexDirection: 'column', justifyContent: 'center', alignItems: 'center', padding: '2%', backgroundColor: 'white'}}>
+              <View style={{borderWidth: 0, borderColor: 'black', flex: 1, flexDirection: 'row', alignItems: 'flex-end', paddingBottom: '5%', justifyContent: 'center', height: 40}}>
+                <Text style={{paddingRight: '5%', fontSize: 16, fontWeight: 'bold', color: 'black'}}>Age</Text>
+                <Text style={{fontSize: 10, fontWeight: 'bold', color: 'black'}}>years</Text>
               </View>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => {
-              this.clearInputFocus()
-              this.onPressMale()
-            }}>
-              <View style={{borderBottomWidth: 4, borderColor: this.state.gender === 'male' ? 'gray' : 'rgba(0, 0, 0, 0)'}}>
-                <View style={{padding: 5}}>
-                  <Image
-                    source={this.state.gender === 'male' ? require('../../App/Images/male45x100-dark.png') : require('../../App/Images/male45x100.png')}
-                    style={{width: 45, height: 100}}
-                  />
-                </View>
-              </View>
-            </TouchableOpacity>
-          </View>
-          {buttons.map((name, i) => [
-            <View key={i} style={{flex: 1, flexDirection: 'row'}}>
-              <View key={i + 10} style={{flexBasis: '60%'}}>
-                <RoundedButton
-                  key={i + 20}
-                  onPress={() => this.props.navigation.navigate(name.concat('Screen'), this.state)}>
-                  {name}
-                </RoundedButton>
-                <ChildSummary
-                  name={name}
-                  KcalState={this.KcalState}
-                  ProteinState={this.ProteinState}
-                  FluidState={this.FluidState}
-                  IbwState={this.IbwState}
-                  BmiState={this.BmiState}
-                  style={{paddingLeft: '10%', paddingBottom: '10%'}} />
-              </View>
-              <View key={i + 30} style={{flexBasis: '40%'}}>
-                <View key={i + 40} style={{padding: '10%'}}>
-                  <Button title={calculatedValStrings[name]} disabled onPress={noop} />
-                </View>
+              <View style={{borderWidth: 0, borderColor: 'orange', flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'flex-start', backgroundColor: 'white'}}>
+                <FocusableTextInput
+                  returnKeyType={'next'}
+                  onSubmitEditing={this.handleAgeInputSubmit}
+                  placeholder=''
+                  underlineColorAndroid='transparent'
+                  keyboardType='numeric'
+                  style={styles.TextInput}
+                  onChangeText={(text) => {
+                    this.state.age = parseFloat(text)
+                    this.runAllCalcs()
+                  }}
+                  value={this.state.text} />
               </View>
             </View>
-          ])}
-          <View style={{flex: 1, flexDirection: 'row', justifyContent: 'flex-end', alignSelf: 'center', alignItems: 'center', height: 60, width: '90%'}}>
-            <TouchableOpacity onPress={() => this.props.navigation.navigate('DisclaimerScreen', this.state)}>
+            <View style={{borderWidth: 1, borderColor: '#86cacb', borderRadius: 10, flexDirection: 'column', justifyContent: 'center', alignItems: 'center', padding: '2%', backgroundColor: 'white'}}>
+              <View style={{borderWidth: 0, borderColor: 'black', flex: 1, flexDirection: 'row', alignItems: 'flex-end', paddingBottom: '5%', justifyContent: 'center', height: 40}}>
+                <Text style={{paddingRight: '5%', fontSize: 16, fontWeight: 'bold', color: 'black'}}>Weight</Text>
+                <Text style={{fontSize: 10, fontWeight: 'bold', color: 'black'}}>lbs</Text>
+              </View>
+              <View style={{borderWidth: 0, borderColor: 'orange', flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'flex-start', backgroundColor: 'white'}}>
+                <FocusableTextInput
+                  returnKeyType={'next'}
+                  focus={this.state.focusWeightInput}
+                  onSubmitEditing={this.handleWeightInputSubmit}
+                  placeholder=''
+                  underlineColorAndroid='transparent'
+                  keyboardType='numeric'
+                  style={styles.TextInput}
+                  onChangeText={(text) => {
+                    this.state.weight_lbs = parseFloat(text)
+                    this.runAllCalcs()
+                  }}
+                  value={this.state.text} />
+              </View>
+            </View>
+          </View>
+          <View style={{borderWidth: 0, borderColor: 'blue', flex: 1, flexDirection: 'row', justifyContent: 'space-around', alignItems: 'flex-start', paddingTop: '4%', backgroundColor: 'white'}}>
+            <View style={{borderWidth: 1, borderColor: '#86cacb', borderRadius: 10, flexDirection: 'column', justifyContent: 'center', alignItems: 'flex-start', padding: '2%', backgroundColor: 'white'}}>
+              <View style={{borderWidth: 0, borderColor: 'black', flex: 1, flexDirection: 'row', alignItems: 'flex-end', paddingBottom: '1%', justifyContent: 'center', height: 40}}>
+                <View style={{borderWidth: 0, borderColor: 'green', flex: 1, flexDirection: 'row', alignItems: 'flex-end', justifyContent: 'center'}}>
+                  <Text style={{paddingRight: '5%', fontSize: 16, fontWeight: 'bold', color: 'black'}}>Height</Text>
+                  <Text style={{fontSize: 10, fontWeight: 'bold', color: 'black'}}>ft</Text>
+                </View>
+                <View style={{borderWidth: 0, borderColor: 'blue', flex: 1, flexDirection: 'row', alignItems: 'flex-end', justifyContent: 'flex-start', paddingLeft: '2%'}}>
+                  <Text style={{fontSize: 10, fontWeight: 'bold', color: 'black'}}>in</Text>
+                </View>
+              </View>
+              <View style={{flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'flex-start', backgroundColor: 'white'}}>
+                <FocusableTextInput
+                  returnKeyType={'next'}
+                  focus={this.state.focusHeightFtInput}
+                  onSubmitEditing={this.handleHeightFtInputSubmit}
+                  placeholder=''
+                  underlineColorAndroid='transparent'
+                  keyboardType='numeric'
+                  style={styles.TextInput}
+                  onChangeText={(text) => {
+                    this.state.height_ft = parseFloat(text)
+                    this.runAllCalcs()
+                  }}
+                  value={this.state.text} />
+                <FocusableTextInput
+                  focus={this.state.focusHeightInInput}
+                  onSubmitEditing={this.handleHeightInInputSubmit}
+                  placeholder=''
+                  underlineColorAndroid='transparent'
+                  keyboardType='numeric'
+                  style={styles.TextInput}
+                  onChangeText={(text) => {
+                    this.state.height_in = parseFloat(text)
+                    this.runAllCalcs()
+                  }}
+                  value={this.state.text} />
+              </View>
+            </View>
+          </View>
+          <View style={{borderWidth: 0, borderColor: 'blue', flex: 1, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', paddingTop: '4%', backgroundColor: 'white'}}>
+            <View style={{borderWidth: 1, borderColor: '#86cacb', borderRadius: 10, flexDirection: 'column', justifyContent: 'center', alignItems: 'flex-start', padding: '2%', marginTop: '0%', marginLeft: '20%', marginRight: '20%', marginBottom: '4%', backgroundColor: 'white'}}>
+              <View style={{borderWidth: 0, borderColor: 'black', flex: 1, flexDirection: 'row', alignItems: 'center', paddingBottom: '5%', justifyContent: 'center', alignSelf: 'center', width: 100}}>
+                <Text style={{paddingRight: '5%', fontSize: 16, fontWeight: 'bold', color: 'black'}}>Gender</Text>
+              </View>
+              <View style={{flex: 1, flexDirection: 'row', paddingBottom: '4%', justifyContent: 'center', alignSelf: 'center', alignItems: 'center', height: 154, width: undefined}}>
+                <TouchableOpacity onPress={() => {
+                  this.clearInputFocus()
+                  this.onPressFemale()
+                }}>
+                  <View style={{borderBottomWidth: 4, borderColor: this.state.gender === 'female' ? 'gray' : 'rgba(0, 0, 0, 0)'}}>
+                    <View style={{padding: 10}}>
+                      <Image
+                        source={this.state.gender === 'female' ? require('../../App/Images/female44x100-dark.png') : require('../../App/Images/female44x100.png')}
+                        style={{width: 44, height: 100}}
+                      />
+                    </View>
+                  </View>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => {
+                  this.clearInputFocus()
+                  this.onPressMale()
+                }}>
+                  <View style={{borderBottomWidth: 4, borderColor: this.state.gender === 'male' ? 'gray' : 'rgba(0, 0, 0, 0)'}}>
+                    <View style={{padding: 10}}>
+                      <Image
+                        source={this.state.gender === 'male' ? require('../../App/Images/male44x100-dark.png') : require('../../App/Images/male44x100.png')}
+                        style={{width: 44, height: 100}}
+                      />
+                    </View>
+                  </View>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </View>
+          <View style={{borderWidth: 0, borderColor: 'blue', flex: 1, flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'center', paddingTop: '0%', backgroundColor: 'white'}}>
+            {buttons.map((name, i) => [
+              <View key={i} style={{flex: 1, flexDirection: 'column', paddingTop: '2%', paddingBottom: '2%', paddingLeft: '4%', paddingRight: '4%', width: '100%'}}>
+                <TouchableOpacity style={{flex: 1, flexDirection: 'row', borderWidth: 1, borderColor: '#86cacb', borderRadius: 10, alignItems: 'center', paddingTop: '3%', paddingBottom: '3%', justifyContent: 'space-between'}} onPress={() => {
+                  this.clearInputFocus()
+                  this.props.navigation.navigate(name.concat('Screen'), this.state)
+                }}>
+                  <View style={{flex: 1, flexDirection: 'row', flexBasis: '21%', justifyContent: 'center', paddingLeft: '2%', paddingRight: '2%'}}>
+                    <Text style={{fontWeight: 'bold', color: 'black'}}>
+                      {name.toUpperCase()}
+                    </Text>
+                  </View>
+                  <ChildSummary
+                    name={name}
+                    KcalState={this.KcalState}
+                    ProteinState={this.ProteinState}
+                    FluidState={this.FluidState}
+                    IbwState={this.IbwState}
+                    BmiState={this.BmiState}
+                    style={{flex: 1, flexDirection: 'row', flexBasis: '38%', alignItems: 'center', justifyContent: 'flex-start', paddingLeft: '2%', paddingRight: '2%'}} />
+                  <View style={{flex: 1, flexDirection: 'row', flexBasis: '29%', justifyContent: 'center'}}>
+                    <Text style={{fontWeight: 'bold', color: 'black'}}>
+                      {calculatedValStrings[name]}
+                    </Text>
+                  </View>
+                  <Image
+                    source={require('../../App/Images/right_arrow_02.png')}
+                    style={{flex: 1, flexBasis: '12%', height: 26, resizeMode: 'contain'}}
+                  />
+                </TouchableOpacity>
+              </View>
+            ])}
+          </View>
+          <View style={{borderTopWidth: 2, borderColor: '#bfbfbf', flex: 1, flexDirection: 'row', justifyContent: 'flex-end', alignSelf: 'center', alignItems: 'center', height: 60, width: '100%', backgroundColor: '#dddddd'}}>
+            <TouchableOpacity style={{paddingRight: '10%'}} onPress={() => this.props.navigation.navigate('DisclaimerScreen', this.state)}>
               <Text>Disclaimer</Text>
             </TouchableOpacity>
           </View>

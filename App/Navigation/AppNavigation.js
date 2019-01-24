@@ -1,4 +1,6 @@
-import { StackNavigator } from 'react-navigation'
+import React from 'react'
+import { View, Image, StyleSheet } from 'react-native'
+import { StackNavigator, Header } from 'react-navigation'
 import DisclaimerScreen from '../Containers/DisclaimerScreen'
 import BmiScreen from '../Containers/BmiScreen'
 import IbwScreen from '../Containers/IbwScreen'
@@ -16,7 +18,7 @@ const PrimaryNav = StackNavigator({
   LaunchScreen: {
     screen: LaunchScreen,
     navigationOptions: {
-      headerTitle: 'Dietitian\'s Tools - LaunchScreen',
+      headerTitle: 'LaunchScreen',
     },
   },
   SummaryScreen: {
@@ -28,46 +30,64 @@ const PrimaryNav = StackNavigator({
   KcalScreen: {
     screen: KcalScreen,
     navigationOptions: {
-      headerTitle: 'Dietitian\'s Tools - KCAL',
+      headerTitle: 'KCAL',
     },
   },
   ProteinScreen: {
     screen: ProteinScreen,
     navigationOptions: {
-      headerTitle: 'Dietitian\'s Tools - PROTEIN',
+      headerTitle: 'PROTEIN',
     },
   },
   FluidScreen: {
     screen: FluidScreen,
     navigationOptions: {
-      headerTitle: 'Dietitian\'s Tools - FLUID',
+      headerTitle: 'FLUID',
     },
   },
   IbwScreen: {
     screen: IbwScreen,
     navigationOptions: {
-      headerTitle: 'Dietitian\'s Tools - IBW',
+      headerTitle: 'IBW',
     },
   },
   BmiScreen: {
     screen: BmiScreen,
     navigationOptions: {
-      headerTitle: 'Dietitian\'s Tools - BMI',
+      headerTitle: 'BMI',
     },
   },
   DisclaimerScreen: {
     screen: DisclaimerScreen,
     navigationOptions: {
-      headerTitle: 'Dietitian\'s Tools - Disclaimer',
-    },
-  },
+      headerTitle: 'Disclaimer',
+    }
+  }
 }, {
   // Default config for all screens
   headerMode: 'float',
   initialRouteName: 'SummaryScreen',
   navigationOptions: {
     headerStyle: styles.header,
-    title: 'Dietitian\'s Tools'
+    headerTitleStyle: {color: 'black'},
+    title: 'Dietitian\'s Tools',
+    headerRight: (
+      <View
+        style={{
+          height: 45,
+          width: 200,
+          alignItems: 'center',
+          justifyContent: 'center',
+          borderRadius: 10,
+          margin: 0
+        }}
+        >
+        <Image
+          style={{height: 45, width: 200}}
+          source={require('../../App/Images/header-image.png')}
+          resizeMode='contain'
+        />
+      </View>)
   }
 })
 

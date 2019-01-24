@@ -3,10 +3,11 @@ import { View, ScrollView, Text } from 'react-native'
 import { connect } from 'react-redux'
 // Add Actions - replace 'Your' with whatever your reducer is called :)
 // import YourActions from '../Redux/YourRedux'
-import RadioGroup from 'react-native-radio-buttons-group'
+//import RadioGroup from 'react-native-radio-buttons-group'
+import RadioGroup from '../Components/RadioButtonsGroup'
 
 // Styles
-import styles from './Styles/ProteinScreenStyle'
+import styles from './Styles/GeneralStyle'
 
 class ProteinScreen extends Component {
   constructor (props) {
@@ -25,15 +26,19 @@ class ProteinScreen extends Component {
 
   render () {
     return (
-      <ScrollView style={styles.container}>
-        <View style={styles.container}>
-          <RadioGroup radioButtons={this.state.data} onPress={(data) => {
-            let selectedButton = data.find(e => e.selected === true)
-            let newSelectedVal = selectedButton ? selectedButton.value : data[0].value
-            this.notifySummaryPage(newSelectedVal)
-          }} />
-          <View style={{flex: 1, flexDirection: 'row', justifyContent: 'center', alignSelf: 'center', alignItems: 'center', borderWidth: 1, height: 30, width: '80%'}}>
-            <Text>Protein: {this.state.protein_min === this.state.protein_max ? this.state.protein_min.toFixed(1) : this.state.protein_min.toFixed(1) + ' - ' + this.state.protein_max.toFixed(1)}</Text>
+      <ScrollView style={styles.ChildScrollView} contentContainerStyle={{ flexGrow: 1, justifyContent: 'space-between', flexDirection: 'column' }}>
+        <View style={{ flex: 1, justifyContent: 'flex-start' }}>
+          <View padding='5%'>
+            <RadioGroup radioButtons={this.state.data} onPress={(data) => {
+              let selectedButton = data.find(e => e.selected === true)
+              let newSelectedVal = selectedButton ? selectedButton.value : data[0].value
+              this.notifySummaryPage(newSelectedVal)
+            }} />
+            <View style={{flex: 1, flexDirection: 'row', justifyContent: 'center', alignSelf: 'center', alignItems: 'center', height: 30, width: '80%', marginTop: '5%'}}>
+              <Text style={{fontSize: 16, fontWeight: 'bold', color: 'black'}}>Protein: {this.state.protein_min === this.state.protein_max ? this.state.protein_min.toFixed(1) : this.state.protein_min.toFixed(1) + ' - ' + this.state.protein_max.toFixed(1)}</Text>
+            </View>
+          </View>
+          <View style={{borderTopWidth: 2, borderColor: '#bfbfbf', flex: 1, justifyContent: 'flex-end', width: '100%', backgroundColor: '#dddddd'}}>
           </View>
         </View>
       </ScrollView>

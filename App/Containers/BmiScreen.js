@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 // import YourActions from '../Redux/YourRedux'
 
 // Styles
-import styles from './Styles/BmiScreenStyle'
+import styles from './Styles/GeneralStyle'
 
 class BmiScreen extends Component {
   constructor (props) {
@@ -26,61 +26,27 @@ class BmiScreen extends Component {
 
   render () {
     return (
-      <ScrollView>
-        <View>
-          <Picker
-            selectedValue={this.state.selectedAmpIndex}
-            onValueChange={(itemValue, itemIndex) => {
-              this.notifySummaryPage(itemValue)
-            }}
-          >
-            {this.state.ampData.map((member, i) => [
-              <Picker.Item label={member.label} value={member.index} key={i} />
-            ])}
-          </Picker>
-          <View style={{flex: 1, flexDirection: 'row', justifyContent: 'center', alignSelf: 'center', alignItems: 'center', borderWidth: 1, height: 30, width: '80%'}}>
-            <Text>BMI: {this.state.bmi.toFixed(1) + ' - ' + this.state.classification}</Text>
-          </View>
-          <View style={{flex: 1, flexDirection: 'row', justifyContent: 'center', alignSelf: 'center', height: 30, width: '80%'}} />
-          <View style={{flex: 1, flexDirection: 'row', justifyContent: 'center', alignSelf: 'center', borderWidth: 1, height: 30, width: '80%'}}>
-            <View style={{flex: 1, justifyContent: 'center', alignItems: 'center', borderRightWidth: 1}}>
-              <Text>Classification</Text>
+      <ScrollView style={styles.ChildScrollView} contentContainerStyle={{ flexGrow: 1, justifyContent: 'space-between', flexDirection: 'column' }}>
+        <View style={{ flex: 1, justifyContent: 'flex-start' }}>
+          <View padding='5%'>
+            <Text style={{fontSize: 16, fontWeight: 'bold', color: 'black'}}>Amputation</Text>
+            <View style={{borderWidth: 1, borderColor: '#86cacb', borderRadius: 10}}>
+              <Picker
+                selectedValue={this.state.selectedAmpIndex}
+                onValueChange={(itemValue, itemIndex) => {
+                  this.notifySummaryPage(itemValue)
+                }}
+              >
+                {this.state.ampData.map((member, i) => [
+                  <Picker.Item label={member.label} value={member.index} key={i} />
+                ])}
+              </Picker>
             </View>
-            <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-              <Text>BMI</Text>
+            <View style={{flex: 1, flexDirection: 'row', justifyContent: 'center', alignSelf: 'center', alignItems: 'center', height: 30, width: '80%', marginTop: '10%'}}>
+              <Text style={{fontSize: 16, fontWeight: 'bold', color: 'black'}}>BMI: {this.state.bmi.toFixed(1) + ' - ' + this.state.classification}</Text>
             </View>
           </View>
-          <View style={{flex: 1, flexDirection: 'row', justifyContent: 'center', alignSelf: 'center', borderWidth: 1, height: 30, width: '80%'}}>
-            <View style={{flex: 1, justifyContent: 'center', alignItems: 'center', borderRightWidth: 1}}>
-              <Text>Overweight</Text>
-            </View>
-            <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-              <Text>25.0 - 29.9</Text>
-            </View>
-          </View>
-          <View style={{flex: 1, flexDirection: 'row', justifyContent: 'center', alignSelf: 'center', borderWidth: 1, height: 30, width: '80%'}}>
-            <View style={{flex: 1, justifyContent: 'center', alignItems: 'center', borderRightWidth: 1}}>
-              <Text>Obesity I</Text>
-            </View>
-            <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-              <Text>30.0 - 34.9</Text>
-            </View>
-          </View>
-          <View style={{flex: 1, flexDirection: 'row', justifyContent: 'center', alignSelf: 'center', borderWidth: 1, height: 30, width: '80%'}}>
-            <View style={{flex: 1, justifyContent: 'center', alignItems: 'center', borderRightWidth: 1}}>
-              <Text>Obesity II</Text>
-            </View>
-            <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-              <Text>35.0 - 39.9</Text>
-            </View>
-          </View>
-          <View style={{flex: 1, flexDirection: 'row', justifyContent: 'center', alignSelf: 'center', borderWidth: 1, height: 30, width: '80%'}}>
-            <View style={{flex: 1, justifyContent: 'center', alignItems: 'center', borderRightWidth: 1}}>
-              <Text>Extreme Obesity III</Text>
-            </View>
-            <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-              <Text>>40.0</Text>
-            </View>
+          <View style={{borderTopWidth: 2, borderColor: '#bfbfbf', flex: 1, justifyContent: 'flex-end', width: '100%', backgroundColor: '#dddddd'}}>
           </View>
         </View>
       </ScrollView>

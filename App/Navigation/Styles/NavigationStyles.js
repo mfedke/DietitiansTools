@@ -3,6 +3,7 @@ import { Colors } from '../../Themes/'
 
 export default StyleSheet.create({
   header: {
-    backgroundColor: Colors.backgroundColor
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10
   }
 })

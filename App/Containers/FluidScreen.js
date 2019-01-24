@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 // import YourActions from '../Redux/YourRedux'
 
 // Styles
-import styles from './Styles/FluidScreenStyle'
+import styles from './Styles/GeneralStyle'
 
 class FluidFactors extends React.Component {
   render () {
@@ -14,17 +14,19 @@ class FluidFactors extends React.Component {
 
     if (FluidState.formulaData[FluidState.selectedFormulaIndex].label === 'ml/kg') {
       factors =
-        <View paddingLeft='5%' paddingRight='5%' paddingTop='5%' paddingBottom='10%'>
-          <Picker
-            selectedValue={FluidState.selectedMlkgIndex}
-            onValueChange={(itemValue, itemIndex) => {
-              notifySummaryPageMlkgIndex(itemIndex)
-            }}
-          >
-            {FluidState.mlkgData.map((member, i) => [
-              <Picker.Item label={member.LL.toFixed(0) + ' - ' + member.UL.toFixed(0) + ' ' + member.label} value={i} key={i} />
-            ])}
-          </Picker>
+        <View paddingLeft='5%' paddingRight='5%' paddingTop='5%'>
+          <View style={{borderWidth: 1, borderColor: '#86cacb', borderRadius: 10}}>
+            <Picker
+              selectedValue={FluidState.selectedMlkgIndex}
+              onValueChange={(itemValue, itemIndex) => {
+                notifySummaryPageMlkgIndex(itemIndex)
+              }}
+            >
+              {FluidState.mlkgData.map((member, i) => [
+                <Picker.Item label={member.LL.toFixed(0) + ' - ' + member.UL.toFixed(0) + ' ' + member.label} value={i} key={i} />
+              ])}
+            </Picker>
+          </View>
         </View>
     }
 
@@ -56,24 +58,31 @@ class FluidScreen extends Component {
 
   render () {
     return (
-      <ScrollView>
-        <View>
-          <Picker
-            selectedValue={this.state.selectedFormulaIndex}
-            onValueChange={(itemValue, itemIndex) => {
-              this.notifySummaryPageFormulaIndex(itemIndex)
-            }}
-          >
-            {this.state.formulaData.map((member, i) => [
-              <Picker.Item label={member.label} value={i} key={i} />
-            ])}
-          </Picker>
-          <FluidFactors
-            FluidState={this.state}
-            notifySummaryPageMlkgIndex={this.notifySummaryPageMlkgIndex}
-          />
-          <View style={{flex: 1, flexDirection: 'row', justifyContent: 'center', alignSelf: 'center', alignItems: 'center', borderWidth: 1, height: 30, width: '80%'}}>
-            <Text>Fluid: {this.state.fluid_min === this.state.fluid_max ? this.state.fluid_min.toFixed(1) : this.state.fluid_min.toFixed(1) + ' - ' + this.state.fluid_max.toFixed(1)}</Text>
+      <ScrollView style={styles.ChildScrollView} contentContainerStyle={{ flexGrow: 1, justifyContent: 'space-between', flexDirection: 'column' }}>
+        <View style={{ flex: 1, justifyContent: 'flex-start' }}>
+          <View padding='5%'>
+            <Text style={{fontSize: 16, fontWeight: 'bold', color: 'black'}}>Formula</Text>
+            <View style={{borderWidth: 1, borderColor: '#86cacb', borderRadius: 10}}>
+              <Picker
+                selectedValue={this.state.selectedFormulaIndex}
+                onValueChange={(itemValue, itemIndex) => {
+                  this.notifySummaryPageFormulaIndex(itemIndex)
+                }}
+              >
+                {this.state.formulaData.map((member, i) => [
+                  <Picker.Item label={member.label} value={i} key={i} />
+                ])}
+              </Picker>
+            </View>
+            <FluidFactors
+              FluidState={this.state}
+              notifySummaryPageMlkgIndex={this.notifySummaryPageMlkgIndex}
+            />
+            <View style={{flex: 1, flexDirection: 'row', justifyContent: 'center', alignSelf: 'center', alignItems: 'center', height: 30, width: '80%', marginTop: '10%'}}>
+              <Text style={{fontSize: 16, fontWeight: 'bold', color: 'black'}}>Fluid: {this.state.fluid_min === this.state.fluid_max ? this.state.fluid_min.toFixed(1) : this.state.fluid_min.toFixed(1) + ' - ' + this.state.fluid_max.toFixed(1)}</Text>
+            </View>
+          </View>
+          <View style={{borderTopWidth: 2, borderColor: '#bfbfbf', flex: 1, justifyContent: 'flex-end', width: '100%', backgroundColor: '#dddddd'}}>
           </View>
         </View>
       </ScrollView>
