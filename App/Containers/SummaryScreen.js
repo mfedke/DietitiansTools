@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, TextInput, Image, ScrollView, TouchableOpacity, Button } from 'react-native'
+import { View, Text, TextInput, Image, ScrollView, TouchableOpacity, Button, Animated } from 'react-native'
 import { connect } from 'react-redux'
 import RoundedButton from '../Components/RoundedButton'
 import PropTypes from 'prop-types'
@@ -478,7 +478,8 @@ class SummaryScreen extends Component {
       bmi: 0.0,
       classification: 'Normal'
     }
-  }
+  } // constructor
+
 
   clearInputFocus = () => {
     this.setState({

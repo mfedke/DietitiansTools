@@ -1,6 +1,7 @@
 import React from 'react'
 import { View, Image, StyleSheet } from 'react-native'
 import { StackNavigator, Header } from 'react-navigation'
+import SplashScreen from '../Containers/SplashScreen'
 import DisclaimerScreen from '../Containers/DisclaimerScreen'
 import BmiScreen from '../Containers/BmiScreen'
 import IbwScreen from '../Containers/IbwScreen'
@@ -15,6 +16,12 @@ import styles from './Styles/NavigationStyles'
 
 // Manifest of possible screens
 const PrimaryNav = StackNavigator({
+  SplashScreen: {
+    screen: SplashScreen,
+    navigationOptions: {
+      headerStyle: { display: 'none' }
+    }
+  },
   LaunchScreen: {
     screen: LaunchScreen,
     navigationOptions: {
@@ -66,7 +73,7 @@ const PrimaryNav = StackNavigator({
 }, {
   // Default config for all screens
   headerMode: 'float',
-  initialRouteName: 'SummaryScreen',
+  initialRouteName: 'SplashScreen',
   navigationOptions: {
     headerStyle: styles.header,
     headerTitleStyle: {color: 'black'},
