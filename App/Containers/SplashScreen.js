@@ -15,7 +15,7 @@ class SplashScreen extends Component {
       dismissSplash: false
     }
 
-    this.duration = 2000
+    this.duration = 3000
   }
 
   componentDidMount () {
@@ -24,7 +24,7 @@ class SplashScreen extends Component {
       this.state.fadeAnim,
       {
         toValue: 1,
-        duration: this.duration
+        duration: this.duration / 2
       }
     ).start()
 
