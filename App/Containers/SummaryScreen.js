@@ -85,7 +85,7 @@ class ChildSummary extends React.Component {
       summary = selectedAmp.label + '; ' + BmiState.classification
     }
 
-    return (<View style={style}><Text style={{fontSize: 10, color: '#353535'}}>{summary}</Text></View>)
+    return (<View style={style}><Text style={styles.TextSmallLight}>{summary}</Text></View>)
   }
 }
 
@@ -714,12 +714,12 @@ class SummaryScreen extends Component {
         { /* this is an inline JSX comment */ }
         <View>
           <View style={{borderWidth: 0, borderColor: 'blue', flex: 1, flexDirection: 'row', justifyContent: 'space-around', alignItems: 'flex-start', paddingTop: '4%', backgroundColor: 'white'}}>
-            <View style={{borderWidth: 1, borderColor: '#86cacb', borderRadius: 10, flexDirection: 'column', justifyContent: 'center', alignItems: 'center', padding: '2%', backgroundColor: 'white'}}>
-              <View style={{borderWidth: 0, borderColor: 'black', flex: 1, flexDirection: 'row', alignItems: 'flex-end', paddingBottom: '5%', justifyContent: 'center', height: 40}}>
-                <Text style={{paddingRight: '5%', fontSize: 16, fontWeight: 'bold', color: 'black'}}>Age</Text>
-                <Text style={{fontSize: 10, fontWeight: 'bold', color: 'black'}}>years</Text>
+            <View style={styles.InputOutline}>
+              <View style={styles.InputLabelFirstRow}>
+                <Text style={styles.TextLarge}>Age</Text>
+                <Text style={styles.TextSmall}>years</Text>
               </View>
-              <View style={{borderWidth: 0, borderColor: 'orange', flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'flex-start', backgroundColor: 'white'}}>
+              <View style={styles.TextEntryArea}>
                 <FocusableTextInput
                   returnKeyType={'next'}
                   onSubmitEditing={this.handleAgeInputSubmit}
@@ -734,12 +734,12 @@ class SummaryScreen extends Component {
                   value={this.state.text} />
               </View>
             </View>
-            <View style={{borderWidth: 1, borderColor: '#86cacb', borderRadius: 10, flexDirection: 'column', justifyContent: 'center', alignItems: 'center', padding: '2%', backgroundColor: 'white'}}>
-              <View style={{borderWidth: 0, borderColor: 'black', flex: 1, flexDirection: 'row', alignItems: 'flex-end', paddingBottom: '5%', justifyContent: 'center', height: 40}}>
-                <Text style={{paddingRight: '5%', fontSize: 16, fontWeight: 'bold', color: 'black'}}>Weight</Text>
-                <Text style={{fontSize: 10, fontWeight: 'bold', color: 'black'}}>lbs</Text>
+            <View style={styles.InputOutline}>
+              <View style={styles.InputLabelFirstRow}>
+                <Text style={styles.TextLarge}>Weight</Text>
+                <Text style={styles.TextSmall}>lbs</Text>
               </View>
-              <View style={{borderWidth: 0, borderColor: 'orange', flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'flex-start', backgroundColor: 'white'}}>
+              <View style={styles.TextEntryArea}>
                 <FocusableTextInput
                   returnKeyType={'next'}
                   focus={this.state.focusWeightInput}
@@ -756,18 +756,18 @@ class SummaryScreen extends Component {
               </View>
             </View>
           </View>
-          <View style={{borderWidth: 0, borderColor: 'blue', flex: 1, flexDirection: 'row', justifyContent: 'space-around', alignItems: 'flex-start', paddingTop: '4%', backgroundColor: 'white'}}>
-            <View style={{borderWidth: 1, borderColor: '#86cacb', borderRadius: 10, flexDirection: 'column', justifyContent: 'center', alignItems: 'flex-start', padding: '2%', backgroundColor: 'white'}}>
-              <View style={{borderWidth: 0, borderColor: 'black', flex: 1, flexDirection: 'row', alignItems: 'flex-end', paddingBottom: '1%', justifyContent: 'center', height: 40}}>
-                <View style={{borderWidth: 0, borderColor: 'green', flex: 1, flexDirection: 'row', alignItems: 'flex-end', justifyContent: 'center'}}>
-                  <Text style={{paddingRight: '5%', fontSize: 16, fontWeight: 'bold', color: 'black'}}>Height</Text>
-                  <Text style={{fontSize: 10, fontWeight: 'bold', color: 'black'}}>ft</Text>
+          <View style={styles.SecondInputRow}>
+            <View style={styles.InputOutline}>
+              <View style={styles.InputLabelContainerSecondRow}>
+                <View style={styles.InputLabelSecondRowLeft}>
+                  <Text style={styles.TextLarge}>Height</Text>
+                  <Text style={styles.TextSmall}>ft</Text>
                 </View>
-                <View style={{borderWidth: 0, borderColor: 'blue', flex: 1, flexDirection: 'row', alignItems: 'flex-end', justifyContent: 'flex-start', paddingLeft: '2%'}}>
-                  <Text style={{fontSize: 10, fontWeight: 'bold', color: 'black'}}>in</Text>
+                <View style={styles.InputLabelSecondRowRight}>
+                  <Text style={styles.TextSmall}>in</Text>
                 </View>
               </View>
-              <View style={{flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'flex-start', backgroundColor: 'white'}}>
+              <View style={styles.TextEntryArea}>
                 <FocusableTextInput
                   returnKeyType={'next'}
                   focus={this.state.focusHeightFtInput}
@@ -796,12 +796,12 @@ class SummaryScreen extends Component {
               </View>
             </View>
           </View>
-          <View style={{borderWidth: 0, borderColor: 'blue', flex: 1, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', paddingTop: '4%', backgroundColor: 'white'}}>
-            <View style={{borderWidth: 1, borderColor: '#86cacb', borderRadius: 10, flexDirection: 'column', justifyContent: 'center', alignItems: 'flex-start', padding: '2%', marginTop: '0%', marginLeft: '20%', marginRight: '20%', marginBottom: '4%', backgroundColor: 'white'}}>
-              <View style={{borderWidth: 0, borderColor: 'black', flex: 1, flexDirection: 'row', alignItems: 'center', paddingBottom: '5%', justifyContent: 'center', alignSelf: 'center', width: 100}}>
-                <Text style={{paddingRight: '5%', fontSize: 16, fontWeight: 'bold', color: 'black'}}>Gender</Text>
+          <View style={styles.ThirdInputRow}>
+            <View style={styles.InputOutlineGender}>
+              <View style={styles.InputLabelThirdRow}>
+                <Text style={styles.TextLarge}>Gender</Text>
               </View>
-              <View style={{flex: 1, flexDirection: 'row', paddingBottom: '4%', justifyContent: 'center', alignSelf: 'center', alignItems: 'center', height: 154, width: undefined}}>
+              <View style={styles.ThirdInputRowIconContainer}>
                 <TouchableOpacity onPress={() => {
                   this.clearInputFocus()
                   this.onPressFemale()
@@ -831,15 +831,15 @@ class SummaryScreen extends Component {
               </View>
             </View>
           </View>
-          <View style={{borderWidth: 0, borderColor: 'blue', flex: 1, flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'center', paddingTop: '0%', backgroundColor: 'white'}}>
+          <View style={styles.ChildButtonArea}>
             {buttons.map((name, i) => [
-              <View key={i} style={{flex: 1, flexDirection: 'column', paddingTop: '2%', paddingBottom: '2%', paddingLeft: '4%', paddingRight: '4%', width: '100%'}}>
-                <TouchableOpacity style={{flex: 1, flexDirection: 'row', borderWidth: 1, borderColor: '#86cacb', borderRadius: 10, alignItems: 'center', paddingTop: '3%', paddingBottom: '3%', justifyContent: 'space-between'}} onPress={() => {
+              <View key={i} style={styles.ChildButtonContainer}>
+                <TouchableOpacity style={styles.ChildButtonOutline} onPress={() => {
                   this.clearInputFocus()
                   this.props.navigation.navigate(name.concat('Screen'), this.state)
                 }}>
-                  <View style={{flex: 1, flexDirection: 'row', flexBasis: '21%', justifyContent: 'center', paddingLeft: '2%', paddingRight: '2%'}}>
-                    <Text style={{fontWeight: 'bold', color: 'black'}}>
+                  <View style={styles.ChildButtonLabel}>
+                    <Text style={styles.TextMedium}>
                       {name.toUpperCase()}
                     </Text>
                   </View>
@@ -850,9 +850,9 @@ class SummaryScreen extends Component {
                     FluidState={this.FluidState}
                     IbwState={this.IbwState}
                     BmiState={this.BmiState}
-                    style={{flex: 1, flexDirection: 'row', flexBasis: '38%', alignItems: 'center', justifyContent: 'flex-start', paddingLeft: '2%', paddingRight: '2%'}} />
-                  <View style={{flex: 1, flexDirection: 'row', flexBasis: '29%', justifyContent: 'center'}}>
-                    <Text style={{fontWeight: 'bold', color: 'black'}}>
+                    style={styles.ChildButtonSummary} />
+                  <View style={styles.ChildButtonValue}>
+                    <Text style={styles.TextMedium}>
                       {calculatedValStrings[name]}
                     </Text>
                   </View>
@@ -864,7 +864,7 @@ class SummaryScreen extends Component {
               </View>
             ])}
           </View>
-          <View style={{borderTopWidth: 2, borderColor: '#bfbfbf', flex: 1, flexDirection: 'row', justifyContent: 'flex-end', alignSelf: 'center', alignItems: 'center', height: 60, width: '100%', backgroundColor: '#dddddd'}}>
+          <View style={styles.Footer}>
             <TouchableOpacity style={{paddingRight: '10%'}} onPress={() => this.props.navigation.navigate('DisclaimerScreen', this.state)}>
               <Text>Disclaimer</Text>
             </TouchableOpacity>

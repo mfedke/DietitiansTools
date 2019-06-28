@@ -62,7 +62,7 @@ class SplashScreen extends Component {
   render () {
     console.log('SplashScreen rendering')
     return (
-      <Animated.View style={{flex: 1, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', opacity: this.state.fadeAnim, backgroundColor: '#86cacb'}} >
+      <Animated.View style={{flex: 1, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', opacity: this.state.fadeAnim, backgroundColor: '#86cac9'}} >
         <Image source={require('../../App/Images/DietitiansToolsSplashScreen.png')} style={{width: '90%', height: '90%'}} />
       </Animated.View>
     )

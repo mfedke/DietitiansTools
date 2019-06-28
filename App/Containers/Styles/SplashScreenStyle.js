@@ -3,6 +3,6 @@ import { Colors, Metrics } from '../../Themes/'
 
 export default StyleSheet.create({
   container: {
-    backgroundColor: 'white'
+    backgroundColor: '#86cac9'
   }
 })
