@@ -83,15 +83,15 @@ const PrimaryNav = StackNavigator({
         style={{
           height: 45,
           width: 200,
-          alignItems: 'center',
+          alignItems: 'flex-end',
           justifyContent: 'center',
           borderRadius: 10,
           margin: 0
         }}
         >
         <Image
-          style={{height: 45, width: 200}}
-          source={require('../../App/Images/header-image.png')}
+          style={{height: 50, width: 50, marginRight: 10}}
+          source={require('../../App/Images/corner_icon.png')}
           resizeMode='contain'
         />
       </View>)
