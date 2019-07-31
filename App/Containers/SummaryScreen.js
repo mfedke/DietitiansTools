@@ -384,72 +384,72 @@ class SummaryScreen extends Component {
     this.ampData = [
       {
         label: 'No Amputation',
-        value: 1.0,
+        value: 0.0,
         index: 0
       },
       {
         label: 'Below Knee - 5.9%',
-        value: 1.0 - 0.059,
+        value: 0.059,
         index: 1
       },
       {
         label: 'Above Knee - 10%',
-        value: 1.0 - 0.1,
+        value: 0.1,
         index: 2
       },
       {
         label: 'Bilateral BKA - 11.8%',
-        value: 1.0 - 0.118,
+        value: 0.118,
         index: 3
       },
       {
         label: 'Bilateral AKA - 20%',
-        value: 1.0 - 0.2,
+        value: 0.2,
         index: 4
       },
       {
         label: 'BKA + AKA - 16%',
-        value: 1.0 - 0.16,
+        value: 0.16,
         index: 5
       },
       {
         label: 'Foot - 1.5%',
-        value: 1.0 - 0.015,
+        value: 0.015,
         index: 6
       },
       {
         label: 'Both Feet - 3%',
-        value: 1.0 - 0.03,
+        value: 0.03,
         index: 7
       },
       {
         label: 'Forearm and Hand - 2.3%',
-        value: 1.0 - 0.023,
+        value: 0.023,
         index: 8
       },
       {
         label: 'Both Forearms and Hands - 4.6%',
-        value: 1.0 - 0.046,
+        value: 0.046,
         index: 9
       },
       {
         label: 'Entire Arm - 5%',
-        value: 1.0 - 0.05,
+        value: 0.05,
         index: 10
       },
       {
         label: 'Both Entire Arms - 10%',
-        value: 1.0 - 0.1,
+        value: 0.1,
         index: 11
       },
       {
         label: 'Entire Leg - 16%',
-        value: 1.0 - 0.16,
+        value: 0.16,
         index: 12
       },
       {
         label: 'Both Entire Legs - 32%',
-        value: 1.0 - 0.32,
+        value: 0.32,
         index: 13
       }
     ]
@@ -667,14 +667,14 @@ class SummaryScreen extends Component {
 
     let selectedAmp = this.IbwState.ampData.find(e => e.index === this.IbwState.selectedAmpIndex)
 
-    this.IbwState.ibw_min = (ibwBase * 0.9 - this.IbwState.plegiaVal) * selectedAmp.value
-    this.IbwState.ibw_max = (ibwBase * 1.1 - this.IbwState.plegiaVal) * selectedAmp.value
+    this.IbwState.ibw_min = (ibwBase * 0.9 - this.IbwState.plegiaVal) * (1.0 - selectedAmp.value)
+    this.IbwState.ibw_max = (ibwBase * 1.1 - this.IbwState.plegiaVal) * (1.0 - selectedAmp.value)
   }
 
   calcBmi () {
     var heightIn = this.state.height_ft * 12.0 + this.state.height_in
     let selectedAmp = this.BmiState.ampData.find(e => e.index === this.BmiState.selectedAmpIndex)
-    this.BmiState.bmi = 703.0 * (this.state.weight_lbs / (heightIn * heightIn)) * selectedAmp.value
+    this.BmiState.bmi = 703.0 * ((this.state.weight_lbs / (1.0 + selectedAmp.value)) / (heightIn * heightIn))
     if (this.BmiState.bmi < 25.0) {
       this.BmiState.classification = 'Normal'
     } else if (this.BmiState.bmi >= 25.0 && this.BmiState.bmi < 30.0) {
