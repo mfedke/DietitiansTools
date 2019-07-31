@@ -674,7 +674,7 @@ class SummaryScreen extends Component {
   calcBmi () {
     var heightIn = this.state.height_ft * 12.0 + this.state.height_in
     let selectedAmp = this.BmiState.ampData.find(e => e.index === this.BmiState.selectedAmpIndex)
-    this.BmiState.bmi = 703.0 * ((this.state.weight_lbs / (1.0 + selectedAmp.value)) / (heightIn * heightIn))
+    this.BmiState.bmi = 703.0 * ((this.state.weight_lbs * (1.0 + selectedAmp.value)) / (heightIn * heightIn))
     if (this.BmiState.bmi < 25.0) {
       this.BmiState.classification = 'Normal'
     } else if (this.BmiState.bmi >= 25.0 && this.BmiState.bmi < 30.0) {
